@@ -39,7 +39,7 @@
   users.users.samuel = {
     isNormalUser = true;
     description = "Samuel";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDhEujw7+sYxnJsZ9KaPbaHrllnrVPmnfa2QBmTKD4fmYb9gT8El8WCL5C/UwVroDH5bGVbX14VWLhfAZI0A98Y2mivMrrtzn50X/63lKBOb+v5QWPy85xEjaPOrNwcF2Bdc5iSOMeL65M8tm7CDZrj+pNhI2xiVZIp2tAhQ3TIxuCc4P9eNXsNzLJRvqSppVSOgITYJ9AT0r55RldY/PCMGjmmmHoxE7bnSe3Ma+VnpN8F9pEQoy8RAMo9HRtJ4GbLHpqSgX8cT8SFk6l00UfGc41YhjDd962qIK81wC30AzoZwFDSz6/JTkgFSpNdGyHZjdV8qHE60J91hIoargmdJP/Lmx73tHct63UlhFGfIwACi5bzU4+AFm8L3MGJlu8VV7BOIu3IlNZUNLztijU+lzo2eAiXMlH8SPFKOWF74Dbk8nKAmhFGczXkvLs7JPT5oTiv++xUfTQfjDnZTGiGQKUSs5Co6Bg+l/jgF6NjJwVAyEXC+C2QYPbJ00y3Kb8=" ];
@@ -61,6 +61,8 @@
       };
     };
   };
+
+  virtualisation.docker.enable = true;
 
   programs = {
     git = {
@@ -91,6 +93,8 @@
 	nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/";
         nixconfig = "nvim ~/dotfiles/system/configuration.nix";
 	nixprograms = "nvim ~/dotfiles/system/program.nix";
+	nixdir = "echo \"use flake\" > .envrc && direnv allow";
+	vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
       };
     };
     neovim = {
