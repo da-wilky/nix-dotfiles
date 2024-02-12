@@ -46,6 +46,15 @@
   };
   security.sudo.wheelNeedsPassword = false;
 
+  users.users.fabi = {
+    isNormalUser = true;
+    description = "Fabius";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.zsh;
+    packages = with pkgs; [];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFYPJIYpDXdLFLTzp+ftjjA9dgS1jAw2URGM15LTRUzI fabius2001@hotmail.de" ];   
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -69,6 +78,15 @@
       enable = true;
       config = {
 	init.defaultBranch = "main";
+	alias = {
+	  ci = "commit";
+	  co = "checkout";
+	  st = "status";
+	  undo = "reset --soft HEAD^";
+
+	  localignore = "update-index --skip-worktree";
+	  localunignore = "update-index --no-skip-worktree";
+	};
       };
     };
     zsh = {
@@ -93,6 +111,7 @@
 	nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/";
         nixconfig = "nvim ~/dotfiles/system/configuration.nix";
 	nixprograms = "nvim ~/dotfiles/system/program.nix";
+	nixflake = "nvim ~/dotfiles/flake.nix";
 	nixdir = "echo \"use flake\" > .envrc && direnv allow";
 	vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
       };

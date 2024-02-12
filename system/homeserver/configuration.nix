@@ -17,6 +17,11 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  programs.zsh.shellAliases = {
+    "nixeditc" = "nvim ~/dotfiles/system/homeserver/configuration.nix";
+    "nixeditp" = "nvim ~/dotfiles/system/homeserver/program.nix";
+  };
+
   networking = {
     hostName = "homeserver"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -25,13 +30,13 @@ in {
     networkmanager.enable = true;
     
     # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ 22 ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
+    firewall.allowedTCPPorts = [ 22 3000 ];
+    # firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
-    # networking.firewall.enable = true;
+    # firewall.enable = false;
     
     # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    # proxy.default = "http://user:password@proxy:port/";
+    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 }

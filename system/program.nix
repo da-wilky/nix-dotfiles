@@ -11,5 +11,7 @@
 
     # Development tools
     vscode
+    vscode-fhs
+    #openvscode-server
   ];
 }
