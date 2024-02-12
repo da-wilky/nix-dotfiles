@@ -1,5 +1,7 @@
 {
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+  #inputs.nixpkgs.url = github:NixOS/nixpkgs/master;
+
   inputs.vscode-server.url = github:nix-community/nixos-vscode-server;
 
   outputs = { self, nixpkgs, vscode-server, ... }@attrs: {
