@@ -53,7 +53,6 @@ in {
    };
    systemd.services.vscode-server-daemon.enable = true;
 
-
   networking = {
     hostName = "homeserver"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

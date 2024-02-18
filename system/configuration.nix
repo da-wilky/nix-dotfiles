@@ -113,7 +113,8 @@
 	nixprograms = "nvim ~/dotfiles/system/program.nix";
 	nixflake = "nvim ~/dotfiles/flake.nix";
 	nixdir = "echo \"use flake\" > .envrc && direnv allow";
-	vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
+	#vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
+	builddocker = "nix build && docker load < result && rm result";
       };
     };
     neovim = {
