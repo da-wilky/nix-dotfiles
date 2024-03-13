@@ -65,7 +65,10 @@ in {
     # firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
     # firewall.enable = false;
-    
+
+    # Wake On Lan - needs BIOS setting enabled
+    interfaces.enp1s0.wakeOnLan.enable = true;
+
     # Configure network proxy if necessary
     # proxy.default = "http://user:password@proxy:port/";
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
