@@ -115,6 +115,7 @@
 	nixdir = "echo \"use flake\" > .envrc && direnv allow";
 	#vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
 	builddocker = "nix build && docker load < result && rm result";
+	builddockerversion = "nix build .#version && docker load < result && rm result";
 	dockerrestart = "docker compose down && docker compose up -d";
       };
     };
