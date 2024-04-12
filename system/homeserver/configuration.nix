@@ -27,6 +27,15 @@ in {
   programs.nix-ld.libraries = with pkgs; [
   ];
 
+  users.users.fabi = {
+    isNormalUser = true;
+    description = "Fabius";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.zsh;
+    packages = with pkgs; [];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFYPJIYpDXdLFLTzp+ftjjA9dgS1jAw2URGM15LTRUzI fabius2001@hotmail.de" ];   
+  };
+
   #environment.variables = pkgs.lib.mkForce {
   #	"NIX_LD_LIBRARY_PATH" = lib.makeLibraryPath [
   #       pkgs.stdenv.cc.cc
