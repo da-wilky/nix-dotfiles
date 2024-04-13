@@ -105,8 +105,10 @@
 	nixflake = "nvim ~/dotfiles/flake.nix";
 	nixdir = "echo \"use flake\" > .envrc && direnv allow";
 	#vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
-	builddocker = "nix build && docker load < result && rm result";
-	builddockerversion = "nix build .#version && docker load < result && rm result";
+	#builddocker = "nix build && docker load < result && rm result";
+	builddocker = "nix build --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
+	#builddockerversion = "nix build .#version && docker load < result && rm result";
+	builddockerversion = "nix build .#version --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
 	dockerrestart = "docker compose down && docker compose up -d";
       };
     };
