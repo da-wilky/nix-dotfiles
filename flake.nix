@@ -15,5 +15,11 @@
         })
       ];
     };
+    nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+	./system/blu/configuration.nix
+      ];
+    };
   };
 }

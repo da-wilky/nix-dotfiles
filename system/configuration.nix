@@ -99,7 +99,7 @@
       shellAliases = {
         v = "nvim";
 	vim = "nvim";
-	nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/";
+	#nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/";
         nixconfig = "nvim ~/dotfiles/system/configuration.nix";
 	nixprograms = "nvim ~/dotfiles/system/program.nix";
 	nixflake = "nvim ~/dotfiles/flake.nix";

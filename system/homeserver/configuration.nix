@@ -9,6 +9,7 @@ in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./program.nix
       ../configuration.nix
       ../program.nix
   ];
@@ -18,8 +19,9 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   programs.zsh.shellAliases = {
-    "nixeditc" = "nvim ~/dotfiles/system/homeserver/configuration.nix";
-    "nixeditp" = "nvim ~/dotfiles/system/homeserver/program.nix";
+    nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/flake.nix#homeserver";
+    nixeditc = "nvim ~/dotfiles/system/homeserver/configuration.nix";
+    nixeditp = "nvim ~/dotfiles/system/homeserver/program.nix";
   };
 
   #programs.nix-ld.dev.enable = true;
