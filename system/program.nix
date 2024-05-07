@@ -4,6 +4,7 @@
     # CLI programs
     wget
     direnv
+    git-lfs
 
     # Languages
 
