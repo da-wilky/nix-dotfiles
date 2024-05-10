@@ -4,22 +4,32 @@
 
   inputs.vscode-server.url = github:nix-community/nixos-vscode-server;
 
-  outputs = { self, nixpkgs, vscode-server, ... }@attrs: {
-    nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
+  inputs.agenix.url = github:ryantm/agenix;
+
+  outputs = { self, nixpkgs, vscode-server, agenix, ... }@attrs:
+    let
       system = "x86_64-linux";
-      modules = [
-	./system/homeserver/configuration.nix
-	vscode-server.nixosModules.default
-        ({ config, pkgs, ... }: {
-          services.vscode-server.enable = true;
-        })
-      ];
+    in
+    {
+      nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
+	inherit system;
+	modules = [
+	  ./system/homeserver/configuration.nix
+	  vscode-server.nixosModules.default
+	  ({ config, pkgs, ... }: {
+	    services.vscode-server.enable = true;
+	  })
+	];
+      };
+      nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
+	inherit system;
+	modules = [
+	  ./system/blu/configuration.nix
+	  agenix.nixosModules.default
+	  {
+	    environment.systemPackages = [ agenix.packages.${system}.default ];
+	  }
+	];
+      };
     };
-    nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-	./system/blu/configuration.nix
-      ];
-    };
-  };
 }
