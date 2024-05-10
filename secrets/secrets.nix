@@ -9,5 +9,5 @@ let
   systems = [ blu home ];
 in
 {
-  "samuel-ssh.age".publicKeys = [ samuel blu ];
+  "samuel-ssh.age".publicKeys = [ samuel ] ++ systems;
 }
