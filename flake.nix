@@ -9,6 +9,15 @@
   outputs = { self, nixpkgs, vscode-server, agenix, ... }@attrs:
     let
       system = "x86_64-linux";
+  
+      # agenix
+      agenixpkg = agenix.packages.${system}.default;
+      agenixmodule = [ 
+	agenix.nixosModules.default 
+	{
+	  environment.systemPackages = [ agenixpkg ];
+	}
+      ];
     in
     {
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
@@ -19,17 +28,13 @@
 	  ({ config, pkgs, ... }: {
 	    services.vscode-server.enable = true;
 	  })
-	];
+	] ++ agenixmodule;
       };
       nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
 	inherit system;
 	modules = [
 	  ./system/blu/configuration.nix
-	  agenix.nixosModules.default
-	  {
-	    environment.systemPackages = [ agenix.packages.${system}.default ];
-	  }
-	];
+	] ++ agenixmodule;
       };
     };
 }

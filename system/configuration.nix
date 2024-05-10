@@ -45,6 +45,15 @@
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHpC8wD8E/BsQ7dLAjatwIzhvL0cR20rwtFauf0Oa1p" ];
   };
   security.sudo.wheelNeedsPassword = false;
+  
+  # agenix default ssh key
+  age.secrets.samuel-ssh = {
+    file = ../secrets/samuel-ssh.age;
+    # path = "/home/samuel/.ssh/id_ed25519";
+    owner = "samuel";
+    group = "users";
+    mode = "770";
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
