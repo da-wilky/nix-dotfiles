@@ -19,7 +19,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   programs.zsh.shellAliases = {
-    nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/flake.nix#homeserver";
+    nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#homeserver";
     nixeditc = "nvim ~/dotfiles/system/homeserver/configuration.nix";
     nixeditp = "nvim ~/dotfiles/system/homeserver/program.nix";
   };
