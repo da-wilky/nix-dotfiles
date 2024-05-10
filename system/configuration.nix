@@ -49,10 +49,11 @@
   # agenix default ssh key
   age.secrets.samuel-ssh = {
     file = ../secrets/samuel-ssh.age;
-    # path = "/home/samuel/.ssh/id_ed25519";
+    path = "/home/samuel/.ssh/id_ed25519";
     owner = "samuel";
     group = "users";
-    mode = "770";
+    mode = "600";
+    symlink = false;
   };
 
   # Allow unfree packages
