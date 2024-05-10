@@ -34,12 +34,33 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  users.users.samuel.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdVF0E34V4Ya5xqp3iHRWME1tyTRrGAMkyBC+Mcf2Tg samuel@rs-zap716701-1" ];
+
   programs.zsh.shellAliases = {
     nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#blu";
     nixeditc = "nvim ~/dotfiles/system/blu/configuration.nix";
     nixeditp = "nvim ~/dotfiles/system/blu/program.nix";
   };
-  
+
+  services.restic.backups = {
+    localbackup = {
+      initialize = true;
+      paths = [
+	"/home"
+      ];
+      exclude = [
+	"/home/*/.cache"
+      ];
+      repository = "/restic/backup";
+      passwordFile = "/home/samuel/restic-password";
+      timerConfig = {
+	OnCalendar = "2050-1-1";
+	# OnCalendar = "*-*-* *:*:00";
+	# Persistent = true;
+      };
+    };
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
