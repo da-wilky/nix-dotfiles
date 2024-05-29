@@ -72,8 +72,11 @@
     };
   };
 
-  virtualisation.docker.enable = true;
-
+  virtualisation.docker = {
+    enable = true;
+    liveRestore = false;
+  };
+  
   programs = {
     git = {
       enable = true;
