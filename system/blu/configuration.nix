@@ -42,6 +42,10 @@
     nixeditp = "nvim ~/dotfiles/system/blu/program.nix";
   };
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+  ];
+  
   services.restic.backups = {
     localbackup = {
       initialize = true;
