@@ -139,7 +139,7 @@
 		'';
         packages.myVimPackage = with pkgs.vimPlugins; {
           start = [
-            colorizer
+	    colorizer
             fugitive
             nerdtree
             nvim-treesitter-refactor
