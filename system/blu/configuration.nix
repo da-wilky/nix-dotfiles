@@ -47,7 +47,9 @@
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
   ];
-  
+
+  services.netbird.enable = true;
+
   services.restic.backups = {
     localbackup = {
       initialize = true;
