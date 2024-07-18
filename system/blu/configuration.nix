@@ -29,8 +29,7 @@
   networking.networkmanager.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.allowedTCPPorts = [ 22 3478 5349 ];
+  networking.firewall.allowedTCPPorts = [ 3478 5349 ];
   networking.firewall.allowedUDPPorts = [ 3478 5349 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
@@ -48,6 +47,7 @@
   programs.nix-ld.libraries = with pkgs; [
   ];
 
+  services.openssh.ports = [ 3821 ];
   services.netbird.enable = true;
 
   services.restic.backups = {
