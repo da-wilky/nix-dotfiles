@@ -38,13 +38,7 @@ in {
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFYPJIYpDXdLFLTzp+ftjjA9dgS1jAw2URGM15LTRUzI fabius2001@hotmail.de" ];   
   };
 
-  services.netbird = {
-    enable = true;
-    tunnels.mine.environment = {
-      NB_MANAGEMENT_URL = "https://netbird.swilk.eu";
-      NB_SETUP_KEY = "16EBCBC9-0167-47C2-B7BF-C4EAC0BD108F";
-    };
-  };
+  services.netbird.enable = true;  
 
   #environment.variables = pkgs.lib.mkForce {
   #	"NIX_LD_LIBRARY_PATH" = lib.makeLibraryPath [
