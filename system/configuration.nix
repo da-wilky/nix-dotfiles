@@ -109,6 +109,11 @@
 	plugins = [ "git" "sudo" "docker" "history" "colorize" "direnv" ];
         theme = "alanpeabody";
       };
+      shellInit = ''
+	flakeinit() {
+	  nix flake init --template "github:da-wilky/flake-templates#$1";
+	}
+      '';
       shellAliases = {
         v = "nvim";
 	vim = "nvim";
