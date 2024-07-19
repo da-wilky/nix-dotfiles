@@ -31,6 +31,9 @@
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 3478 5349 ];
   networking.firewall.allowedUDPPorts = [ 3478 5349 ];
+  networking.firewall.interfaces."wt0" = {
+    allowedTCPPorts = [ 3821 ];
+  };
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -48,6 +51,7 @@
   ];
 
   services.openssh.ports = [ 3821 ];
+  services.openssh.openFirewall = false;
   services.netbird.enable = true;
 
   services.restic.backups = {
