@@ -113,8 +113,12 @@
 	flakeinit() {
 	  nix flake init --template "github:da-wilky/flake-templates#$1";
 	}
+	commit() {
+	  git commit -m "$1";
+	}
       '';
       shellAliases = {
+	".." = "cd ..";
         v = "nvim";
 	vim = "nvim";
         nixconfig = "nvim ~/dotfiles/system/configuration.nix";
@@ -126,13 +130,12 @@
 	# builddockerversion = "nix build .#version && docker load < result && rm result";
 	builddocker = "nix build --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
 	builddockerversion = "nix build .#version --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
-	dockerrestart = "docker compose down && docker compose up -d";
 	dup = "docker compose up -d";
 	ddown = "docker compose down";
+	drestart = "docker compose down && docker compose up -d";
 	dsrm = "docker stack rm";
 	dsdeploy = "docker stack deploy --compose-file docker-compose.yml";
 	dsservices = "docker stack services";
-	".." = "cd ..";
       };
     };
     neovim = {
