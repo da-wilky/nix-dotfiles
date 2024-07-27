@@ -29,13 +29,22 @@ in {
   programs.nix-ld.libraries = with pkgs; [
   ];
 
-  users.users.fabi = {
+  #users.users.fabi = {
+  #  isNormalUser = true;
+  #  description = "Fabius";
+  #  extraGroups = [ "networkmanager" "wheel" "docker" ];
+  #  shell = pkgs.zsh;
+  #  packages = with pkgs; [];
+  #  openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFYPJIYpDXdLFLTzp+ftjjA9dgS1jAw2URGM15LTRUzI fabius2001@hotmail.de" ];   
+  #};
+
+  users.users.nico = {
     isNormalUser = true;
-    description = "Fabius";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    description = "Nico";
+    extraGroups = [ "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [];
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFYPJIYpDXdLFLTzp+ftjjA9dgS1jAw2URGM15LTRUzI fabius2001@hotmail.de" ];   
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHpC8wD8E/BsQ7dLAjatwIzhvL0cR20rwtFauf0Oa1p" ];   
   };
 
   services.netbird.enable = true;  
