@@ -132,6 +132,7 @@
 	dsrm = "docker stack rm";
 	dsdeploy = "docker stack deploy --compose-file docker-compose.yml";
 	dsservices = "docker stack services";
+	".." = "cd ..";
       };
     };
     neovim = {
