@@ -117,11 +117,12 @@
 	  git commit -m "$1";
 	}
 	nixpush() {
-	  cd /home/samuel/dotfiles; git add .; git commit -m "$1"; git push; 
+	  cd /home/samuel/dotfiles; git add .; git commit -m "$1"; git push; cd -;
 	}
       '';
       shellAliases = {
 	".." = "cd ..";
+	cdc = "cd -";
         v = "nvim";
 	vim = "nvim";
         nixconfig = "nvim ~/dotfiles/system/configuration.nix";
