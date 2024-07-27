@@ -160,7 +160,8 @@
             nerdtree
             nvim-treesitter-refactor
             nvim-treesitter.withAllGrammars
-            vim-tmux
+            vim-mergetool
+	    vim-tmux
             vim-tmux-navigator
 	  ];
 	};
