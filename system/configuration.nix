@@ -116,6 +116,9 @@
 	commit() {
 	  git commit -m "$1";
 	}
+	nixpush() {
+	  cd /home/samuel/dotfiles; git add .; git commit -m "$1"; git push; 
+	}
       '';
       shellAliases = {
 	".." = "cd ..";
