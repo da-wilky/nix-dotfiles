@@ -51,7 +51,7 @@
   ];
 
   services.openssh.ports = [ 3821 ];
-  services.openssh.openFirewall = false;
+  #services.openssh.openFirewall = false;
   services.netbird.enable = true;
 
   services.restic.backups = {

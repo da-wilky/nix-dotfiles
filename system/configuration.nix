@@ -127,6 +127,8 @@
 	builddocker = "nix build --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
 	builddockerversion = "nix build .#version --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
 	dockerrestart = "docker compose down && docker compose up -d";
+	dup = "docker compose up -d";
+	ddown = "docker compose down";
 	dsrm = "docker stack rm";
 	dsdeploy = "docker stack deploy --compose-file docker-compose.yml";
 	dsservices = "docker stack services";
