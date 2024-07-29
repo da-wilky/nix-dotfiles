@@ -11,18 +11,21 @@
   inputs.sops-nix.url = github:Mic92/sops-nix;
   inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
+  
+  inputs.nixos-hardware.url = github:nixos/nixos-hardware;
 
-  outputs = { self, nixpkgs, vscode-server, agenix, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, vscode-server, agenix, sops-nix, nixos-hardware, ... }@inputs:
     let
       system = "x86_64-linux";
-  
+      pi_system = "aarch64-linux";  
+
       # agenix
-      agenixpkg = agenix.packages.${system}.default;
-      agenixmodule = [ 
-      	agenix.nixosModules.default 
-      	{
-      	  environment.systemPackages = [ agenixpkg ];
-      	}
+      agenixmodule = i@{ system ? "x86_64-linux", ... }:
+	[ 
+	agenix.nixosModules.default 
+	{
+	  environment.systemPackages = [ agenix.packages.${i.system}.default ];
+	}
       ];
     in
     {
@@ -35,14 +38,21 @@
 	  ({ config, pkgs, ... }: {
 	    services.vscode-server.enable = true;
 	  })
-	] ++ agenixmodule;
+	] ++ agenixmodule { inherit system; };
       };
       nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
 	inherit system;
 	modules = [
 	  ./system/blu/configuration.nix
 	  sops-nix.nixosModules.sops
-	] ++ agenixmodule;
+	] ++ agenixmodule { inherit system; };
+      };
+      nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
+        system = pi_system;
+        modules = [
+          nixos-hardware.nixosModules.raspberry-pi-4
+          ./system/pibackups/configuration.nix
+        ] ++ agenixmodule { system = pi_system; };
       };
     };
 }
