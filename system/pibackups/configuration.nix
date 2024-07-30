@@ -25,13 +25,19 @@
     nixeditp = "nvim ~/dotfiles/system/pibackups/program.nix";
   };
 
+  sops.secrets.wireless-config-dd = {
+    sopsFile = ./secrets.yml;
+    restartUnits = [ "wpa_supplicant-wlan0.service" ]; 
+  };
+
   networking = {
     hostName = "pibackups"; # Define your hostname.
     # Pick only one of the below networking options.
     wireless = {
       enable = true;  # Enables wireless support via wpa_supplicant.
       interfaces = [ "wlan0" ];
-      #networks."SSID".psk = "password";
+      environmentFile = config.sops.secrets.wireless-config-dd.path;
+      networks."@home_uuid@".psk = "@home_psk@";
     };
     #networkmanager.enable = true;  # Easiest to use and most distros use this by default.
     

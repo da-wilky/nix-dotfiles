@@ -20,13 +20,13 @@
       pi_system = "aarch64-linux";  
 
       # agenix
-      agenixmodule = i@{ system ? "x86_64-linux", ... }:
-	[ 
-	agenix.nixosModules.default 
-	{
-	  environment.systemPackages = [ agenix.packages.${i.system}.default ];
-	}
-      ];
+      #agenixmodule = i@{ system ? "x86_64-linux", ... }:
+      #	[ 
+      #	agenix.nixosModules.default 
+      #	{
+      #	  environment.systemPackages = [ agenix.packages.${i.system}.default ];
+      #	}
+      #];
     in
     {
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
@@ -38,14 +38,16 @@
 	  ({ config, pkgs, ... }: {
 	    services.vscode-server.enable = true;
 	  })
-	] ++ agenixmodule { inherit system; };
+	];
+	# ++ agenixmodule { inherit system; };
       };
       nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
 	inherit system;
 	modules = [
 	  ./system/blu/configuration.nix
 	  sops-nix.nixosModules.sops
-	] ++ agenixmodule { inherit system; };
+	];
+	# ++ agenixmodule { inherit system; };
       };
       nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
         system = pi_system;
@@ -53,7 +55,8 @@
           nixos-hardware.nixosModules.raspberry-pi-4
           ./system/pibackups/configuration.nix
 	  sops-nix.nixosModules.sops
-        ] ++ agenixmodule { system = pi_system; };
+        ];
+	# ++ agenixmodule { system = pi_system; };
       };
     };
 }
