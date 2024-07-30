@@ -16,13 +16,21 @@
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.loader.grub.zfsSupport = true;
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
+
+  fileSystems."/data/backups" = {
+    device = "datapool/backups";
+    fsType = "zfs";
+  };
 
   programs.zsh.shellAliases = {
     nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#pibackups";
     nixeditc = "nvim ~/dotfiles/system/pibackups/configuration.nix";
     nixeditp = "nvim ~/dotfiles/system/pibackups/program.nix";
+    poweroff = "reboot";
   };
 
   sops.secrets.wireless-config-dd = {
@@ -31,6 +39,7 @@
   };
 
   networking = {
+    hostId = "0c5f8584"; # Needed for zfs
     hostName = "pibackups"; # Define your hostname.
     # Pick only one of the below networking options.
     wireless = {

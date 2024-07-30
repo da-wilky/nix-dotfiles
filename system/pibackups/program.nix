@@ -4,5 +4,7 @@
     # raspberry pi
     libraspberrypi
     raspberrypi-eeprom
+    zfs
+    wakeonlan
   ];
 }

@@ -8,6 +8,7 @@
     git-lfs
     age
     sops
+    htop
 
     # Languages
 

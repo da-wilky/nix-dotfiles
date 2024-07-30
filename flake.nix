@@ -75,6 +75,7 @@
 	  ./users/defaultUsers.nix
 	  ./modules/default.nix
 	  ./modules/netbird.nix
+	  #./modules/others/hd-idle.nix
 
 	  nixos-hardware.nixosModules.raspberry-pi-4
 	  sops-nix.nixosModules.sops

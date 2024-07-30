@@ -11,6 +11,10 @@
   #      "NIX_LD" = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
   #};
 
+  environment.systemPackages = with pkgs; [
+    vscode
+  ];
+
   systemd.services.vscode-server-daemon = {
     description = "VSCode Server Daemon";
     serviceConfig = {
