@@ -30,6 +30,7 @@
 	inherit system;
 	modules = [
 	  ./system/homeserver/configuration.nix
+	  sops-nix.nixosModules.sops
 	  vscode-server.nixosModules.default
 	  ({ config, pkgs, ... }: {
 	    services.vscode-server.enable = true;
