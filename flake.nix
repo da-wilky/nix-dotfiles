@@ -52,6 +52,7 @@
         modules = [
           nixos-hardware.nixosModules.raspberry-pi-4
           ./system/pibackups/configuration.nix
+	  sops-nix.nixosModules.sops
         ] ++ agenixmodule { system = pi_system; };
       };
     };
