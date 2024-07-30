@@ -46,16 +46,6 @@
   };
   security.sudo.wheelNeedsPassword = false;
   
-  # agenix default ssh key
-  age.secrets.samuel-ssh = {
-    file = ../secrets/samuel-ssh.age;
-    path = "/home/samuel/.ssh/id_ed25519";
-    owner = "samuel";
-    group = "users";
-    mode = "600";
-    symlink = false;
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -181,6 +171,21 @@
 	#  sensible
 	#  yank
       ];
+    };
+  };
+
+  sops = {
+    defaultSopsFile = ../secrets.yml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    secrets.samuel-ssh-key = {
+      path = "${toString config.users.users.samuel.home}/.ssh/id_ed25519";
+      mode = "0400";
+      owner = config.users.users.samuel.name;
+    };
+    secrets.samuel-age-key = {
+      path = "${toString config.users.users.samuel.home}/.config/sops/age/keys.txt";
+      mode = "0400";
+      owner = config.users.users.samuel.name;
     };
   };
 }

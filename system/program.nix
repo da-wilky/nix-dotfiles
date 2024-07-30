@@ -6,6 +6,8 @@
     direnv
     git
     git-lfs
+    age
+    sops
 
     # Languages
 

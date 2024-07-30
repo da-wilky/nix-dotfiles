@@ -8,17 +8,21 @@
   inputs.agenix.url = github:ryantm/agenix;
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, vscode-server, agenix, ... }@attrs:
+  inputs.sops-nix.url = github:Mic92/sops-nix;
+  inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
+
+  outputs = { self, nixpkgs, vscode-server, agenix, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
   
       # agenix
       agenixpkg = agenix.packages.${system}.default;
       agenixmodule = [ 
-	agenix.nixosModules.default 
-	{
-	  environment.systemPackages = [ agenixpkg ];
-	}
+      	agenix.nixosModules.default 
+      	{
+      	  environment.systemPackages = [ agenixpkg ];
+      	}
       ];
     in
     {
@@ -36,6 +40,7 @@
 	inherit system;
 	modules = [
 	  ./system/blu/configuration.nix
+	  sops-nix.nixosModules.sops
 	] ++ agenixmodule;
       };
     };
