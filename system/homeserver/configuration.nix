@@ -24,57 +24,6 @@ in {
     nixeditp = "nvim ~/dotfiles/system/homeserver/program.nix";
   };
 
-  #programs.nix-ld.dev.enable = true;
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-  ];
-
-  #users.users.fabi = {
-  #  isNormalUser = true;
-  #  description = "Fabius";
-  #  extraGroups = [ "networkmanager" "wheel" "docker" ];
-  #  shell = pkgs.zsh;
-  #  packages = with pkgs; [];
-  #  openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFYPJIYpDXdLFLTzp+ftjjA9dgS1jAw2URGM15LTRUzI fabius2001@hotmail.de" ];   
-  #};
-
-  users.users.nico = {
-    isNormalUser = true;
-    description = "Nico";
-    extraGroups = [ "docker" ];
-    shell = pkgs.zsh;
-    packages = with pkgs; [];
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHpC8wD8E/BsQ7dLAjatwIzhvL0cR20rwtFauf0Oa1p" ];   
-  };
-
-  services.netbird.enable = true;  
-
-  #environment.variables = pkgs.lib.mkForce {
-  #	"NIX_LD_LIBRARY_PATH" = lib.makeLibraryPath [
-  #       pkgs.stdenv.cc.cc
-  #	  pkgs.openssl
-  #        ];
-  #      "NIX_LD" = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
-  #};
-
-   systemd.services.vscode-server-daemon = {
-     description = "VSCode Server Daemon";
-     serviceConfig = {
-       ExecStart = "${pkgs.vscode}/bin/code tunnel --accept-server-license-terms --name Homeserver";
-       #ExecStop = "pkill code";
-       Restart = "on-failure";
-       User = "samuel";
-       Environment = [''"NIX_LD_LIBRARY_PATH=${lib.makeLibraryPath [
-          pkgs.stdenv.cc.cc
-       ]}"'' ''"NIX_LD=${pkgs.glibc}/lib/ld-linux-x86-64.so.2"''];
-     };
-     path = [ "/run/current-system/sw" ];
-     wantedBy = [ "default.target" ];
-     wants = [ "network-online.target" ];
-     after = [ "network-online.target" ];
-   };
-   systemd.services.vscode-server-daemon.enable = true;
-
   networking = {
     hostName = "homeserver"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -95,7 +44,9 @@ in {
     # proxy.default = "http://user:password@proxy:port/";
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
-  
+
+  security.sudo.wheelNeedsPassword = false;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

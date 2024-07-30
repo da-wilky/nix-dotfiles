@@ -46,13 +46,8 @@
     nixeditp = "nvim ~/dotfiles/system/blu/program.nix";
   };
 
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-  ];
-
   services.openssh.ports = [ 3821 ];
-  #services.openssh.openFirewall = false;
-  services.netbird.enable = true;
+  services.openssh.openFirewall = false;
 
   services.restic.backups = {
     localbackup = {
@@ -72,6 +67,8 @@
       };
     };
   };
+
+  security.sudo.wheelNeedsPassword = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

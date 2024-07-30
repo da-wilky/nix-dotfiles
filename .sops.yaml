@@ -17,3 +17,10 @@ creation_rules:
       - age:
         - *user_samuel
         - *sys_pibackups
+  - path_regex: users/samuel.yml$
+    key_groups:
+      - age:
+        - *user_samuel
+        - *sys_blu
+        - *sys_homeserver
+        - *sys_pibackups

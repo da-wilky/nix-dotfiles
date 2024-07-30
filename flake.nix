@@ -33,6 +33,16 @@
 	inherit system;
 	modules = [
 	  ./system/homeserver/configuration.nix
+	  
+	  ./users/defaultUsers.nix
+	  ./users/nico.nix
+
+	  ./modules/default.nix
+	  ./modules/docker.nix
+	  ./modules/netbird.nix
+	  ./modules/others/nixld.nix
+	  #./modules/others/vscode-server.nix
+
 	  sops-nix.nixosModules.sops
 	  vscode-server.nixosModules.default
 	  ({ config, pkgs, ... }: {
@@ -45,6 +55,14 @@
 	inherit system;
 	modules = [
 	  ./system/blu/configuration.nix
+	  
+	  ./users/defaultUsers.nix
+	  
+	  ./modules/default.nix
+	  ./modules/docker.nix
+	  ./modules/netbird.nix
+	  ./modules/others/nixld.nix
+
 	  sops-nix.nixosModules.sops
 	];
 	# ++ agenixmodule { inherit system; };
@@ -52,10 +70,15 @@
       nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
         system = pi_system;
         modules = [
-          nixos-hardware.nixosModules.raspberry-pi-4
-          ./system/pibackups/configuration.nix
+	  ./system/pibackups/configuration.nix
+          
+	  ./users/defaultUsers.nix
+	  ./modules/default.nix
+	  ./modules/netbird.nix
+
+	  nixos-hardware.nixosModules.raspberry-pi-4
 	  sops-nix.nixosModules.sops
-        ];
+	];
 	# ++ agenixmodule { system = pi_system; };
       };
     };
