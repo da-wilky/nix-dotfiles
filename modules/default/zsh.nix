@@ -38,7 +38,7 @@
         nixflake = "nvim ~/dotfiles/flake.nix";
         nixdir = "echo \"use flake\" > .envrc && direnv allow";
         nixpull = "cd /home/samuel/dotfiles; git pull; cd -;";
-        # vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
+	# vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
         # builddocker = "nix build && docker load < result && rm result";
         # builddockerversion = "nix build .#version && docker load < result && rm result";
         builddocker = "nix build --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
@@ -46,7 +46,9 @@
         dup = "docker compose up -d";
         ddown = "docker compose down";
         drestart = "docker compose down && docker compose up -d";
-        dsrm = "docker stack rm";
+        dlogs = "docker compose logs";
+	dexec = "docker compose exec";
+	dsrm = "docker stack rm";
         dsdeploy = "docker stack deploy --compose-file docker-compose.yml";
         dsservices = "docker stack services";
       };
