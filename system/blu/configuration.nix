@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./program.nix
+      ./disable-expose-sshd.nix
       ../configuration.nix
       ../program.nix
     ];
@@ -47,7 +48,6 @@
   };
 
   services.openssh.ports = [ 3821 ];
-  services.openssh.openFirewall = false;
 
   services.restic.backups = {
     localbackup = {
