@@ -73,7 +73,7 @@
 	  ./system/pibackups/configuration.nix
           
 	  ./users/defaultUsers.nix
-	  ./users/backups.nix
+	  ./users/pibackups.nix
 	  ./modules/default.nix
 	  ./modules/netbird.nix
 	  #./modules/others/hd-idle.nix
