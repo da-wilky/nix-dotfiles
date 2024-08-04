@@ -49,21 +49,31 @@
 
   services.openssh.ports = [ 3821 ];
 
+  sops.secrets.backup-password = {
+    sopsFile = ../../secrets.yml;
+  };
+
   services.restic.backups = {
-    localbackup = {
+    serverbackup = {
       initialize = true;
       paths = [
-	"/home"
+	"/home/samuel"
+	"/var/lib/docker/volumes"
       ];
       exclude = [
 	"/home/*/.cache"
       ];
-      repository = "/restic/backup";
-      passwordFile = "/home/samuel/restic-password";
+      repository = "sftp:pibackups:/mnt/backups/1blu";
+      passwordFile = config.sops.secrets.backup-password.path;
+      pruneOpts = [
+	#"--keep-hourly 12"
+	#"--keep-daily 14"
+	#"--keep-weekly 4"
+	#"--keep-monthly 12"
+      ];
       timerConfig = {
-	OnCalendar = "2050-1-1";
-	# OnCalendar = "*-*-* *:*:00";
-	# Persistent = true;
+	OnCalendar = "6h";
+	Persistent = true;
       };
     };
   };
