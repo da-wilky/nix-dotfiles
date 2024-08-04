@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }@inputs: 
 
 {
+  users.defaultUserShell = pkgs.zsh;
+
   programs.zsh = {
       enable = true;
       autosuggestions = {
