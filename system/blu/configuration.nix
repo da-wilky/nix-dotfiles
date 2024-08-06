@@ -49,7 +49,7 @@
 
   services.openssh.ports = [ 3821 ];
 
-  sops.secrets.backup-password = {
+  sops.secrets.backup-password-1blu = {
     sopsFile = ../../secrets.yml;
   };
 
@@ -70,12 +70,12 @@
 	"/home/*/.zsh_history"
       ];
       repository = "sftp:pibackups:/data/backups/1blu";
-      passwordFile = config.sops.secrets.backup-password.path;
+      passwordFile = config.sops.secrets.backup-password-1blu.path;
       pruneOpts = [
-	"--keep-hourly 12"
-	"--keep-daily 14"
-	"--keep-weekly 4"
-	"--keep-monthly 12"
+	"--keep-within-hourly 3d"
+	"--keep-within-daily 14d"
+	"--keep-within-weekly 1m"
+	"--keep-within-monthly 1y"
       ];
       timerConfig = {
 	# Every 6 hours
