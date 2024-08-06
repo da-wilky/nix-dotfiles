@@ -56,23 +56,31 @@
   services.restic.backups = {
     serverbackup = {
       initialize = true;
+      user = "root";
       paths = [
 	"/home/samuel"
-	"/var/lib/docker/volumes"
+	"/var/lib/docker/volumes/coolify-*"
+	"/var/lib/docker/volumes/icinga_*"
+	"/var/lib/docker/volumes/netbird_*"
+	"/var/lib/docker/volumes/tabby-web_*"
+	"/var/lib/docker/volumes/traefik-*"
       ];
       exclude = [
 	"/home/*/.cache"
+	"/home/*/.zsh_history"
       ];
-      repository = "sftp:pibackups:/mnt/backups/1blu";
+      repository = "sftp:pibackups:/data/backups/1blu";
       passwordFile = config.sops.secrets.backup-password.path;
       pruneOpts = [
-	#"--keep-hourly 12"
-	#"--keep-daily 14"
-	#"--keep-weekly 4"
-	#"--keep-monthly 12"
+	"--keep-hourly 12"
+	"--keep-daily 14"
+	"--keep-weekly 4"
+	"--keep-monthly 12"
       ];
       timerConfig = {
-	OnCalendar = "6h";
+	# Every 6 hours
+	OnCalendar = "*-*-* 0/6:00:00";
+	# Reschedule times missed cuz of downtime
 	Persistent = true;
       };
     };
