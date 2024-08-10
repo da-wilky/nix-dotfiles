@@ -1,28 +1,35 @@
 { config, lib, pkgs, ... }@inputs: 
 
 {
-  users.defaultUserShell = pkgs.zsh;
-
   programs.zsh = {
       enable = true;
-      autosuggestions = {
-        enable = true;
-        strategy = [ "completion" ];
-        async = true;
-      };
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      zsh-autoenv.enable = true;
       enableCompletion = true;
-      enableBashCompletion = true;
-      enableLsColors = true;
-      ohMyZsh = {
+      
+      oh-my-zsh = {
         enable = true;
         plugins = [ "git" "sudo" "docker" "history" "colorize" "direnv" ];
-	#theme = "alanpeabody";
+      #	theme = "alanpeabody";
 	#theme = "tonotdo";
-	theme = "tjkirch";
+	#theme = "tjkirch";
       };
-      shellInit = ''
+      
+      plugins = with pkgs; [
+	{
+	  file = "powerlevel10k.zsh-theme";
+	  name = "powerlevel10k";
+	  src = "${zsh-powerlevel10k}/share/zsh-powerlevel10k";
+	}
+	{
+	  file = "p10k.zsh";
+	  name = "powerlevel10k-config";
+	  src = ./p10k;
+	}
+      ];
+
+
+      initExtra = ''
         flakeinit() {
           nix flake init --template "github:da-wilky/flake-templates#$1";
         }

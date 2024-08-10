@@ -41,6 +41,7 @@
 
   users.users.samuel.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdVF0E34V4Ya5xqp3iHRWME1tyTRrGAMkyBC+Mcf2Tg samuel@rs-zap716701-1" ];
 
+  #programs.zsh.enable = true;
   programs.zsh.shellAliases = {
     nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#blu";
     nixeditc = "nvim ~/dotfiles/system/blu/configuration.nix";

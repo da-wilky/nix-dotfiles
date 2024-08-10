@@ -1,11 +1,13 @@
-{ config, pkgs, ... }@inputs:
+{ config, pkgs, lib, ... }@inputs:
 
 {
+  programs.zsh.enable = true;
+  
   users.users.samuel = {
     isNormalUser = true;
     description = "Samuel";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.zsh;
+    shell = lib.mkDefault pkgs.zsh;
     packages = with pkgs; [];
     openssh.authorizedKeys.keyFiles = [ ./keys/samuel ];
   };

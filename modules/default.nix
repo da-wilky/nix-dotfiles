@@ -5,6 +5,6 @@
     ./default/git.nix
     ./default/neovim.nix
     ./default/openssh.nix
-    ./default/zsh.nix
+    #./default/zsh.nix
   ];
 }

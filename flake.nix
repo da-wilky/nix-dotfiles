@@ -1,20 +1,33 @@
 {
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-24.05;
-  #inputs.nixpkgs.url = github:NixOS/nixpkgs/master;
+  inputs = {
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-24.05;
+    #inputs.nixpkgs.url = github:NixOS/nixpkgs/master;
 
-  inputs.vscode-server.url = github:nix-community/nixos-vscode-server;
-  inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+    vscode-server = {
+      url = github:nix-community/nixos-vscode-server;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  inputs.agenix.url = github:ryantm/agenix;
-  inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix = {
+      url = github:ryantm/agenix;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  inputs.sops-nix.url = github:Mic92/sops-nix;
-  inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
-  
-  inputs.nixos-hardware.url = github:nixos/nixos-hardware;
+    sops-nix = {
+      url = github:Mic92/sops-nix;
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+    };
 
-  outputs = { self, nixpkgs, vscode-server, agenix, sops-nix, nixos-hardware, ... }@inputs:
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-hardware.url = github:nixos/nixos-hardware;
+  };
+
+  outputs = { self, nixpkgs, vscode-server, agenix, sops-nix, nixos-hardware, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pi_system = "aarch64-linux";  
@@ -64,6 +77,10 @@
 	  ./modules/others/nixld.nix
 
 	  sops-nix.nixosModules.sops
+	  
+	  home-manager.nixosModules.home-manager
+	  ./modules/home-manager.nix
+	  ./homes/default.nix
 	];
 	# ++ agenixmodule { inherit system; };
       };
