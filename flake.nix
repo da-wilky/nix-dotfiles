@@ -61,6 +61,10 @@
 	  ({ config, pkgs, ... }: {
 	    services.vscode-server.enable = true;
 	  })
+
+	  home-manager.nixosModules.home-manager
+	  ./modules/home-manager.nix
+	  ./homes/default.nix
 	];
 	# ++ agenixmodule { inherit system; };
       };
@@ -97,6 +101,10 @@
 
 	  nixos-hardware.nixosModules.raspberry-pi-4
 	  sops-nix.nixosModules.sops
+	
+	  home-manager.nixosModules.home-manager
+	  ./modules/home-manager.nix
+	  ./homes/default.nix
 	];
 	# ++ agenixmodule { system = pi_system; };
       };
