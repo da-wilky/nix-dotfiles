@@ -9,6 +9,7 @@
     age
     sops
     htop
+    btop
 
     # Languages
 
