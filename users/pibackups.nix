@@ -1,4 +1,4 @@
-{ config, pkgs, ... }@inputs:
+{config, pkgs, lib, ... }@inputs:
 
 {
   users.users.pibackups = {
@@ -6,8 +6,8 @@
     group = "pibackups";
     description = "Backup User the backup services connect with.";
     createHome = true;
-    home = "/data/backups";
-    shell = pkgs.zsh;
+    home = "/home/pibackups";
+    shell = lib.mkDefault pkgs.zsh;
     packages = with pkgs; [];
     openssh.authorizedKeys.keyFiles = [ ./keys/pibackups ];
   };

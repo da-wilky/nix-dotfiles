@@ -105,6 +105,7 @@
 	  home-manager.nixosModules.home-manager
 	  ./modules/home-manager.nix
 	  ./homes/default.nix
+	  ./homes/pibackups.nix
 	];
 	# ++ agenixmodule { system = pi_system; };
       };
