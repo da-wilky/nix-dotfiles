@@ -11,6 +11,7 @@
           st = "status";
           undo = "reset --soft HEAD^";
 
+	  localadd = "update-index --intent-to-add";
           localignore = "update-index --skip-worktree";
           localunignore = "update-index --no-skip-worktree";
         };
