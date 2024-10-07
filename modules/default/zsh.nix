@@ -41,6 +41,9 @@
         nixconfig = "nvim ~/dotfiles/system/configuration.nix";
         nixprograms = "nvim ~/dotfiles/system/program.nix";
         nixflake = "nvim ~/dotfiles/flake.nix";
+        nixgit = "nvim ~/dotfiles/modules/default/git.nix";
+	nixzsh = "nvim ~/dotfiles/modules/default/zsh.nix";
+	nixnvim = "nvim ~/dotfiles/modules/default/neovim.nix";
         nixdir = "echo \"use flake\" > .envrc && direnv allow";
         nixpull = "cd /home/samuel/dotfiles; git pull; cd -;";
 	# vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
