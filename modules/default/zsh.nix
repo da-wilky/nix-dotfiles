@@ -20,7 +20,7 @@
         plugins = [ "git" "sudo" "docker" "history" "colorize" "direnv" ];
 	#theme = "alanpeabody";
 	#theme = "tonotdo";
-	theme = "tjkirch";
+	#theme = "tjkirch";
       };
       shellInit = ''
         flakeinit() {
