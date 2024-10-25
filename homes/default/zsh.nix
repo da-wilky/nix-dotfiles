@@ -58,7 +58,8 @@
         # builddockerversion = "nix build .#version && docker load < result && rm result";
         builddocker = "nix build --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
         builddockerversion = "nix build .#version --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
-        dup = "docker compose up -d";
+	dc = "docker compose";
+	dup = "docker compose up -d";
         ddown = "docker compose down";
         drestart = "docker compose down && docker compose up -d";
         dlogs = "docker compose logs";
