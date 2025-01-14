@@ -45,7 +45,8 @@
         "-" = "cd -";
         v = "nvim";
         vim = "nvim";
-        nixconfig = "nvim ~/dotfiles/system/configuration.nix";
+        nixtemplate = "flakeinit";
+	nixconfig = "nvim ~/dotfiles/system/configuration.nix";
         nixprograms = "nvim ~/dotfiles/system/program.nix";
         nixgit = "nvim ~/dotfiles/modules/default/git.nix";
 	nixzsh = "nvim ~/dotfiles/homes/default/zsh.nix";
