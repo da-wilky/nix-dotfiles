@@ -14,6 +14,7 @@
     # Languages
 
     # Nix extensions
+    nixpkgs-fmt
 
     # Development tools
   ];
