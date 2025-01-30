@@ -12,6 +12,7 @@
       ./disable-expose-sshd.nix
       ../configuration.nix
       ../program.nix
+      ../firewall-trust-docker.nix
     ];
 
   # Bootloader.
@@ -35,13 +36,6 @@
   networking.firewall.interfaces."wt0" = {
     allowedTCPPorts = [ 3821 ];
   };
-  #networking.firewall.interfaces."br-+".allowedUDPPorts = [ 53 ];
-  networking.firewall.trustedInterfaces = [
-    "br-+"
-  #  "veth+"
-  #  "docker0"
-  #  "docker_gwbridge"
-  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

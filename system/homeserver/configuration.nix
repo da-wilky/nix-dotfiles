@@ -12,6 +12,7 @@ in {
       ./program.nix
       ../configuration.nix
       ../program.nix
+      ../firewall-trust-docker.nix
   ];
 
   # Bootloader.
