@@ -80,7 +80,7 @@
 	"--keep-within-monthly 1y"
       ];
       timerConfig = {
-	# Every 6 hours
+	# On 6 o'clock
 	OnCalendar = "*-*-* 06:00:00";
 	# Reschedule times missed cuz of downtime
 	Persistent = true;
