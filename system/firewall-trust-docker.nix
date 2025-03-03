@@ -8,8 +8,8 @@
   #networking.firewall.interfaces."br-+".allowedUDPPorts = [ 53 ];
   networking.firewall.trustedInterfaces = [
     "br-+"
-    #"veth+"
-    #"docker0"
+    "veth+"
+    "docker0"
     "docker_gwbridge"
   ];
   #networking.firewall.enable = false;
