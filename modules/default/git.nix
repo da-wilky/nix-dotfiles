@@ -6,10 +6,14 @@
       config = {
         init.defaultBranch = "main";
         alias = {
-          ci = "commit";
+          c = "commit";
           co = "checkout";
           st = "status";
           undo = "reset --soft HEAD^";
+	  wt = "worktree";
+	  wta = "worktree add";
+	  wtl = "worktree list";
+	  wtr = "worktree remove";
 
 	  localadd = "add --intent-to-add";
           localignore = "update-index --skip-worktree";
