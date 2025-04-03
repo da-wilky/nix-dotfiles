@@ -1,3 +1,9 @@
+#
+#	THIS FILE IS NOT BEING USED
+#	
+#	ZSH is defined by the home manager
+#
+
 { config, lib, pkgs, ... }@inputs: 
 
 {
@@ -32,6 +38,8 @@
         nixpush() {
           cd /home/samuel/dotfiles; git add .; git commit -m "$1"; git push; cd -;
         }
+
+	unset ZSH_AUTOSUGGEST_USE_ASYNC
       '';
       shellAliases = {
         ".." = "cd ..";
