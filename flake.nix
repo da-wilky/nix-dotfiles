@@ -96,6 +96,7 @@
 	  ./users/defaultUsers.nix
 	  ./users/pibackups.nix
 	  ./modules/default.nix
+	  ./modules/docker.nix
 	  ./modules/netbird.nix
 	  #./modules/others/hd-idle.nix
 

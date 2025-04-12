@@ -12,6 +12,7 @@
       ./program.nix
       ../configuration.nix
       ../program.nix
+      ../firewall-trust-docker.nix
     ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
@@ -68,7 +69,7 @@
 	  "root"
 	];
 
-	"hosts allow" = "192.168.0.0/16 127.0.0.1 localhost";
+	"hosts allow" = "192.168.0.0/16 100.85.0.0/16 127.0.0.1 localhost";
 	"hosts deny" = "0.0.0.0/0";
 	"guest ok" = "no";
       };
