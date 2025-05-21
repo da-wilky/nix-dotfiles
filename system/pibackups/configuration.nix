@@ -90,6 +90,40 @@
     openFirewall = true;
   };
 
+  sops.secrets.backup-password-pibackups = {
+    sopsFile = ../../secrets.yml;
+  };
+
+  services.restic.backups = {
+    backup = {
+      initialize = true;
+      user = "root";
+      paths = [
+	"/home/samuel"
+	"/var/lib/docker/volumes/immich_model-cache"
+      ];
+      exclude = [
+	"/home/*/.cache"
+	"/home/*/.zsh_history"
+      ];
+      repository = "/data/backups/pibackups";
+      passwordFile = config.sops.secrets.backup-password-pibackups.path;
+      pruneOpts = [
+	"--keep-within-hourly 3d"
+	"--keep-within-daily 14d"
+	"--keep-within-weekly 1m"
+	"--keep-within-monthly 1y"
+      ];
+      timerConfig = {
+	# On 6 o'clock
+	#OnCalendar = "*-*-* 06:20:00";
+	OnCalendar = "*-*-* 00:37:00";
+	# Reschedule times missed cuz of downtime
+	Persistent = true;
+      };
+    };
+  };
+
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
