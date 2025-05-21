@@ -15,6 +15,7 @@
 
     # Nix extensions
     nixpkgs-fmt
+    nixfmt-classic
 
     # Development tools
   ];

@@ -56,6 +56,8 @@
 	  ./modules/others/nixld.nix
 	  #./modules/others/vscode-server.nix
 
+	  ./modules/ncs-wireguard-access.nix
+
 	  sops-nix.nixosModules.sops
 	  vscode-server.nixosModules.default
 	  ({ config, pkgs, ... }: {

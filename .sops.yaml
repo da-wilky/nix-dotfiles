@@ -12,6 +12,11 @@ creation_rules:
         - *sys_blu
         - *sys_pibackups
         - *sys_homeserver
+  - path_regex: ^ncsystems-secrets.yml$
+    key_groups:
+      - age:
+        - *user_samuel
+        - *sys_homeserver
   - path_regex: system/pibackups/secrets.yml$
     key_groups:
       - age:
