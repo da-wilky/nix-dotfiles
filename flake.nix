@@ -46,6 +46,7 @@
     {
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
 	inherit system;
+	specialArgs = { inherit inputs; };
 	modules = [
 	  ./system/homeserver/configuration.nix
 	  
@@ -96,6 +97,7 @@
       };
       nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
         system = pi_system;
+	specialArgs = { inherit inputs; };
         modules = [
 	  ./system/pibackups/configuration.nix
           
