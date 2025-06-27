@@ -29,7 +29,7 @@
       ];
 
 
-      initExtra = ''
+      initContent = ''
         flakeinit() {
           nix flake init --template "github:da-wilky/flake-templates#$1";
         }

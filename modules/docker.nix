@@ -4,8 +4,11 @@
   virtualisation.docker = {
     enable = true;
     liveRestore = false;
+    enableOnBoot = true;
+    daemon.settings = {
+    # Enable IPv6 for docker networks
+    #  ipv6 = true;
+    #  fixed-cidr-v6 = "fd00::/80";
+    };
   };
-  #virtualisation.docker.daemon.settings = {
-  #  dns = [ "8.8.8.8" "8.8.4.4" ];
-  #};
 }
