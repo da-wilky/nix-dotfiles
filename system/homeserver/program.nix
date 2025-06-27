@@ -8,8 +8,8 @@
     # Nix extensions
 
     # Development tools
-    vscode
-    vscode-fhs
+    #vscode
+    #vscode-fhs
     #openvscode-server
   ];
 }

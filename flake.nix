@@ -61,10 +61,11 @@
 	  ./modules/ncs-wireguard-access.nix
 
 	  sops-nix.nixosModules.sops
-	  vscode-server.nixosModules.default
-	  ({ config, pkgs, ... }: {
-	    services.vscode-server.enable = true;
-	  })
+	  #vscode-server.nixosModules.default
+	  #({ config, pkgs, ... }: {
+	  #  services.vscode-server.enable = true;
+	  #  services.vscode-server.enableFHS = true;
+	  #})
 
 	  home-manager.nixosModules.home-manager
 	  ./modules/home-manager.nix
