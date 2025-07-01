@@ -1,0 +1,12 @@
+snippet watchtower "Add Watchtower label to docker-compose service"
+  com.centurylinklabs.watchtower.enable: ${1:true}
+
+snippet traefik "Add traefik configuration to docker-compose service"
+  traefik.enable: true
+  traefik.http.routers.${1}.entrypoints: http
+  traefik.http.routers.${1}.rule: Host(\`${2}\`) 
+  traefik.http.routers.${1}.middlewares: to-https@file
+  traefik.http.routers.${1}-secure.entrypoints: https 
+  traefik.http.routers.${1}-secure.rule: Host(\`${2}\`)
+  traefik.http.routers.${1}-secure.service: ${1}
+  traefik.http.services.${1}.loadbalancer.server.port: ${4:80}

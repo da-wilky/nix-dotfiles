@@ -1,14 +1,14 @@
-{ name, homeDirectory, useZSH ? true, ... }@i:
+{ name, homeDirectory, useZSH ? true, useNVIM ? true, ... }@i:
 
 let
-  defaultImports = [];
-  addZSHImport = if useZSH then defaultImports ++ [ ./zsh.nix ] else defaultImports;
-  resImports = addZSHImport;
+  myImports = []
+    ++ (if useZSH then [ ./zsh.nix ] else [])
+    ++ (if useNVIM then [ ./neovim.nix ] else []);
 in
 {
   programs.home-manager.enable = true;
 
-  imports = resImports;
+  imports = myImports;
 
   # paths it should manage.
   home.username = name;
