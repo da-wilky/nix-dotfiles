@@ -70,7 +70,6 @@
 
 	  home-manager.nixosModules.home-manager
 	  ./modules/home-manager.nix
-	  ./homes/default.nix
 	];
 	# ++ agenixmodule { inherit system; };
       };
@@ -90,8 +89,13 @@
 	  sops-nix.nixosModules.sops
 	  
 	  home-manager.nixosModules.home-manager
+	  #	Need this to use sops inside home-manager
+	  #{
+	  #  home-manager.sharedModules = [
+	  #    sops-nix.homeManagerModules.sops
+	  #  ];
+	  #}
 	  ./modules/home-manager.nix
-	  ./homes/default.nix
 	];
 	# ++ agenixmodule { inherit system; };
       };
@@ -113,8 +117,6 @@
 	
 	  home-manager.nixosModules.home-manager
 	  ./modules/home-manager.nix
-	  ./homes/default.nix
-	  ./homes/pibackups.nix
 	];
 	# ++ agenixmodule { system = pi_system; };
       };

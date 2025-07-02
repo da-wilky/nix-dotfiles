@@ -3,5 +3,6 @@
 {
   imports = [
     ./samuel.nix
+    ./root.nix
   ];
 }

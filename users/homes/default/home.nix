@@ -1,4 +1,4 @@
-{ name, homeDirectory, useZSH ? true, useNVIM ? true, ... }@i:
+{ config, pkgs, name, homeDirectory, useZSH ? true, useNVIM ? true, ... }@i:
 
 let
   myImports = []

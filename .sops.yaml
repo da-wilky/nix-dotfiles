@@ -22,7 +22,7 @@ creation_rules:
       - age:
         - *user_samuel
         - *sys_pibackups
-  - path_regex: users/samuel.yml$
+  - path_regex: users/secrets/samuel.yml$
     key_groups:
       - age:
         - *user_samuel
