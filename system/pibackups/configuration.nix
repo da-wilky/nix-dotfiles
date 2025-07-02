@@ -19,12 +19,19 @@
   boot.loader.grub.enable = false;
   boot.supportedFilesystems = [ "zfs" ];
   boot.loader.grub.zfsSupport = true;
+  boot.kernelParams = [
+    "cgroup_enable=cpuset"
+    "cgroup_enable=memory"
+    "cgroup_memory=1"
+  ];
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  fileSystems."/data/backups" = {
-    device = "datapool/backups";
-    fsType = "zfs";
+  fileSystems = {
+    "/data/backups" = {
+      device = "datapool/backups";
+      fsType = "zfs";
+    };
   };
 
   programs.zsh.shellAliases = {
