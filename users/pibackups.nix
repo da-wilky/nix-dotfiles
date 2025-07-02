@@ -18,8 +18,10 @@ in
     isSystemUser = true;
     group = "${name}";
     description = "Backup User the backup services connect with.";
-    #createHome = true;
-    #home = "${homeDirectory}";
+    # Home set here needed cuz of isSystemUser
+    createHome = true;
+    home = "${homeDirectory}";
+    # ---
     shell = if useZSH then pkgs.zsh else pkgs.bash;
     packages = with pkgs; [];
     openssh.authorizedKeys.keyFiles = [ ./keys/pibackups ];
