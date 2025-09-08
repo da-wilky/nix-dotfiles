@@ -56,6 +56,7 @@
 	nixflake = "nvim ~/dotfiles/flake.nix";
         nixdir = "echo \"use flake\" > .envrc && direnv allow";
         nixpull = "cd /home/samuel/dotfiles; git pull; cd -;";
+	nixgarbage = "sudo nix-collect-garbage --delete-old";
 	# vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
         # builddocker = "nix build && docker load < result && rm result";
         # builddockerversion = "nix build .#version && docker load < result && rm result";
