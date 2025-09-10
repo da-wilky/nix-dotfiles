@@ -27,9 +27,22 @@
     };
 
     nixos-hardware.url = github:nixos/nixos-hardware;
+
+    # Raspberry Pi 5
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, vscode-server, agenix, sops-nix, nixos-hardware, home-manager, ... }@inputs:
+  # Cache Server for Raspberry Pi 5
+  nixConfig = {
+    extra-substituters = [
+      "https://nixos-raspberrypi.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+    ];
+  };
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, vscode-server, agenix, sops-nix, nixos-hardware, home-manager, nixos-raspberrypi, ... }@inputs:
     let
       system = "x86_64-linux";
       pi_system = "aarch64-linux";  
@@ -119,6 +132,30 @@
 	  ./modules/home-manager.nix
 	];
 	# ++ agenixmodule { system = pi_system; };
+      };
+      nixosConfigurations.pi5dd = nixos-raspberrypi.lib.nixosSystem {
+        system = pi_system;
+	specialArgs = { inherit inputs; nixos-raspberrypi = inputs.nixos-raspberrypi; };
+        modules = [
+	  # Raspberry Pi 5
+          ({...}: {
+	    imports = with nixos-raspberrypi.nixosModules; [
+              raspberry-pi-5.base
+            ];
+          })
+
+	  ./system/pi5dd/configuration.nix
+
+          ./users/defaultUsers.nix
+	  ./modules/default.nix
+	  ./modules/netbird.nix
+	  ./modules/docker.nix
+
+	  sops-nix.nixosModules.sops
+
+          home-manager.nixosModules.home-manager
+          ./modules/home-manager.nix
+        ];
       };
     };
 }
