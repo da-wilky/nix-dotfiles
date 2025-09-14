@@ -147,6 +147,7 @@
 	  ./system/pi5dd/configuration.nix
 
           ./users/defaultUsers.nix
+	  ./users/pibackups.nix
 	  ./modules/default.nix
 	  ./modules/netbird.nix
 	  ./modules/docker.nix

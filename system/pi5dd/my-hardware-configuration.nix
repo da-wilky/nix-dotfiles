@@ -10,11 +10,12 @@
     #kernelParams = ["boot=zfs"];
   };
 
-  #boot.kernelParams = [
-  #  "cgroup_enable=cpuset"
-  #  "cgroup_enable=memory"
-  #  "cgroup_memory=1"
-  #];
+  boot.kernelParams = [
+    # To capture memory consumption per docker container (beszel)
+    "cgroup_enable=cpuset"
+    "cgroup_enable=memory"
+    "cgroup_memory=1"
+  ];
 
   fileSystems = {
     "/boot/firmware" = {
