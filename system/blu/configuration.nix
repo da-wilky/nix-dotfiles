@@ -69,7 +69,7 @@
 	"/home/*/.cache"
 	"/home/*/.zsh_history"
       ];
-      repository = "sftp:pibackups:/data/backups/1blu";
+      repository = "sftp:pi5dd:/data/backups/1blu";
       passwordFile = config.sops.secrets.backup-password-1blu.path;
       pruneOpts = [
 	"--keep-within-hourly 3d"
