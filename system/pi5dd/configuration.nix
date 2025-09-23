@@ -47,28 +47,33 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  fileSystems = {
-    "/data/backups" = {
-      device = "wdred/backups";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/data/immich" = {
-      device = "wdred/immich";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/data/mails" = {
-      device = "wdred/mails";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/data/others" = {
-      device = "wdred/others";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-  };
+  #fileSystems = {
+  #  "/mnt/wdred" = {
+  #    device = "wdred";
+  #    fsType = "zfs";
+  #    options = [ "zfsutil" ];
+  #  };
+  #  "/data/backups" = {
+  #    device = "wdred/backups";
+  #    fsType = "zfs";
+  #    options = [ "zfsutil" ];
+  #  };
+  #  "/data/immich" = {
+  #    device = "wdred/immich";
+  #    fsType = "zfs";
+  #    options = [ "zfsutil" ];
+  #  };
+  #  "/data/mails" = {
+  #    device = "wdred/mails";
+  #    fsType = "zfs";
+  #    options = [ "zfsutil" ];
+  #  };
+  #  "/data/others" = {
+  #    device = "wdred/others";
+  #    fsType = "zfs";
+  #    options = [ "zfsutil" ];
+  #  };
+  #};
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
