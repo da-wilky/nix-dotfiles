@@ -1,6 +1,10 @@
 { pkgs, ...}:
 {
   environment.systemPackages = with pkgs; [
+    kubectl
+    kubernetes-helm
+    helmfile
+
     # CLI programs
 
     # Languages
