@@ -16,6 +16,17 @@
   #  };
   #};
 
+  #programs.git = {
+  #  enable = true;
+  #  userEmail = "samuel.wilk.00@gmail.com";
+  #  userName = "Samuel Wilk";
+  #  extraConfig = {};
+  #  signing = {
+  #    key = ;
+  #    signByDefault = true;
+  #  };
+  #};
+
   home.file.".ssh/id_ed25519.pub".text = ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAWEue89TqiVnWtTnBka40kV9md2ImfV2cpVgR/kgUS samuel@nixos'';
 }
 

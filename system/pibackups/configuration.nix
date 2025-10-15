@@ -27,13 +27,6 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  fileSystems = {
-    "/data/backups" = {
-      device = "datapool/backups";
-      fsType = "zfs";
-    };
-  };
-
   programs.zsh.shellAliases = {
     nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#pibackups";
     nixeditc = "nvim ~/dotfiles/system/pibackups/configuration.nix";
@@ -54,7 +47,7 @@
       enable = true;  # Enables wireless support via wpa_supplicant.
       interfaces = [ "wlan0" ];
       secretsFile = config.sops.secrets.wireless-config-dd.path;
-      networks."@home_uuid@".pskRaw = "ext:home_psk";
+      networks."FRITZiBox 7590".pskRaw = "ext:home_psk";
     };
     #networkmanager.enable = true;  # Easiest to use and most distros use this by default.
     

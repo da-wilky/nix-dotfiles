@@ -12,11 +12,21 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = [ "zfs" ];
+  #boot.zfs.extraPools = [ "seagate" ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-      fsType = "ext4";
+  fileSystems = {
+    "/boot" = {
+      device = "/dev/disk/by-uuid/19D8-B7E6";
+      fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
+    "/" = {
+      device = "seagate/root";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
+  };
 
   swapDevices = [ ];
 
