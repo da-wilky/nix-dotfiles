@@ -16,6 +16,21 @@
   #  };
   #};
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "*" = {
+	identitiesOnly = true;
+      };
+      "github.com" = {
+	hostname = "github.com";
+	user = "git";
+	port = 22;
+	identityFile = "~/.ssh/github";
+      };
+    };
+  };
+
   #programs.git = {
   #  enable = true;
   #  userEmail = "samuel.wilk.00@gmail.com";
