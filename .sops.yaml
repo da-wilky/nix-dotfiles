@@ -4,6 +4,7 @@ keys:
   - &sys_homeserver age153d00dlsmf926jkwu3p8c9wy3katt8k25flvnrjl87qhs2648ppqxuxeyl
   - &sys_pi5dd age1g4uyhsrfp29s43jqpctyvkf7wye4mzrr89y2f52qsyfmrqwens9q6yf2l5
   - &sys_pibackups age12c5adcye64hpqecdhjg0jw02ht73n5nzuagqudqhd033dms7dy3st3fsxn
+  - &sys_pangolier age1h8mqhcrv3cew7ps3hf3vr50fwshxmn2aw2a7lpspkgz7d3qkjqxqqmhxqk
 
 creation_rules:
   - path_regex: ^secrets.yml$
@@ -14,6 +15,7 @@ creation_rules:
         - *sys_pibackups
         - *sys_homeserver
         - *sys_pi5dd
+        - *sys_pangolier
   - path_regex: ^ncsystems-secrets.yml$
     key_groups:
       - age:
@@ -33,3 +35,4 @@ creation_rules:
         - *sys_homeserver
         - *sys_pibackups
         - *sys_pi5dd
+        - *sys_pangolier
