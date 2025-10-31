@@ -91,16 +91,16 @@
 	specialArgs = { inherit inputs; };
 	modules = [
 	  ./system/blu/configuration.nix
-	  
+
 	  ./users/defaultUsers.nix
-	  
+
 	  ./modules/default.nix
 	  ./modules/docker.nix
 	  ./modules/netbird.nix
 	  ./modules/others/nixld.nix
 
 	  sops-nix.nixosModules.sops
-	  
+
 	  home-manager.nixosModules.home-manager
 	  #	Need this to use sops inside home-manager
 	  #{
@@ -111,6 +111,25 @@
 	  ./modules/home-manager.nix
 	];
 	# ++ agenixmodule { inherit system; };
+      };
+      nixosConfigurations.pangolier = nixpkgs.lib.nixosSystem {
+	inherit system;
+	specialArgs = { inherit inputs; };
+	modules = [
+	  ./system/pangolier/configuration.nix
+
+	  ./users/defaultUsers.nix
+
+	  ./modules/default.nix
+	  ./modules/docker.nix
+	  ./modules/netbird.nix
+	  ./modules/others/nixld.nix
+
+	  sops-nix.nixosModules.sops
+
+	  home-manager.nixosModules.home-manager
+	  ./modules/home-manager.nix
+	];
       };
       nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
         system = pi_system;

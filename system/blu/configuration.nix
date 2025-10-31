@@ -9,9 +9,9 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./program.nix
-      ./disable-expose-sshd.nix
       ../configuration.nix
       ../program.nix
+      ../disable-expose-sshd.nix
       ../firewall-trust-docker.nix
     ];
 
