@@ -1,47 +1,26 @@
-{ config, pkgs, name, homeDirectory, useZSH ? true, useNVIM ? true, ... }@i:
+{ config, pkgs, name, homeDirectory, userConfig ? {}, gitNameFile ? null, gitEmailFile ? null, ... }:
 
 {
-
   imports = [
-    (import ./default/home.nix i)
+    ../../modules/home/default.nix
   ];
 
-  # This could be done here, but keep it on system level
-  #sops = {
-  #  age.keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
-  #  defaultSopsFile = ../secrets/samuel.yml;
-  #  secrets.samuel-ssh-key = {
-  #    path = "${homeDirectory}/.ssh/id_ed25519";
-  #    mode = "0400";
-  #  };
-  #};
-
-  programs.ssh = {
+  # Base configuration
+  myHomeModules.base = {
     enable = true;
-    matchBlocks = {
-      "*" = {
-	identitiesOnly = true;
-      };
-      "github.com" = {
-	hostname = "github.com";
-	user = "git";
-	port = 22;
-	identityFile = "~/.ssh/github";
-      };
-    };
+    username = name;
+    homeDirectory = homeDirectory;
+    stateVersion = "24.05";
+    sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAWEue89TqiVnWtTnBka40kV9md2ImfV2cpVgR/kgUS samuel@nixos";
   };
 
-  #programs.git = {
-  #  enable = true;
-  #  userEmail = "samuel.wilk.00@gmail.com";
-  #  userName = "Samuel Wilk";
-  #  extraConfig = {};
-  #  signing = {
-  #    key = ;
-  #    signByDefault = true;
-  #  };
-  #};
-
-  home.file.".ssh/id_ed25519.pub".text = ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAWEue89TqiVnWtTnBka40kV9md2ImfV2cpVgR/kgUS samuel@nixos'';
+  # Enable modules based on user preferences
+  myHomeModules.git = {
+    enable = userConfig.enableGit or true;
+    userNameFile = gitNameFile;
+    userEmailFile = gitEmailFile;
+  };
+  myHomeModules.zsh.enable = userConfig.enableZsh or true;
+  myHomeModules.neovim.enable = userConfig.enableNeovim or true;
+  myHomeModules.ssh.enable = userConfig.enableSsh or false;
 }
-

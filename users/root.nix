@@ -1,22 +1,32 @@
-{ config, pkgs, lib, ... }@inputs:
+{ config, pkgs, lib, ... }:
+
+with lib;
 
 let
+  cfg = config.myUsers.root;
+  
   params = {
     name = "root";
     homeDirectory = "/root";
-    useZSH = true;
-    useNVIM = true;
   };
 
-  inherit (params) name useZSH;
+  inherit (params) name;
 in
 {
-  # Enable ZSH
-  programs.zsh.enable = true;
+  options.myUsers.root = {
+    enableHomeManager = mkEnableOption "Home Manager for root" // { default = true; };
+  };
 
-  # Set ZSH default shell for root
-  users.users.${name}.shell = if useZSH then pkgs.zsh else pkgs.bash;
+  config = {
+    # Enable ZSH (managed by home-manager module)
+    programs.zsh.enable = true;
 
-  # Setup Home for root
-  home-manager.users.${name} = ({config, pkgs, ...}: import ./homes/default/home.nix ( { inherit config pkgs; } // params ));
+    # Set ZSH default shell for root
+    users.users.${name}.shell = pkgs.zsh;
+
+    # Setup Home for root
+    home-manager.users.${name} = mkIf cfg.enableHomeManager (
+      {config, pkgs, ...}: import ./homes/root.nix ( { inherit config pkgs; } // params )
+    );
+  };
 }

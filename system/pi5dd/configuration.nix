@@ -11,7 +11,6 @@
       ./program.nix
       ../configuration.nix
       ../program.nix
-      ../firewall-trust-docker.nix
     ];
 
   programs.zsh.shellAliases = {

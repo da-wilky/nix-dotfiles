@@ -11,8 +11,6 @@
       ./program.nix
       ../configuration.nix
       ../program.nix
-      ../disable-expose-sshd.nix
-      ../firewall-trust-docker.nix
     ];
 
   # Bootloader.

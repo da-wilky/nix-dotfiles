@@ -12,7 +12,6 @@
       ./program.nix
       ../configuration.nix
       ../program.nix
-      ../firewall-trust-docker.nix
     ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)

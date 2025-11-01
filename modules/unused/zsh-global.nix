@@ -1,35 +1,42 @@
-{ config, lib, pkgs, ... }@inputs: 
+#
+#	THIS FILE IS NOT BEING USED
+#	
+#	ZSH is defined by the home manager
+#
+# This module is kept for reference/future use but is currently disabled
+
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 {
-  programs.zsh = {
+  options.myModules.zshGlobal = {
+    enable = mkEnableOption "Global ZSH configuration";
+    
+    # Note: This is not currently used as ZSH is configured via home-manager
+    # Enable this if you want system-wide ZSH config instead
+  };
+
+  config = mkIf config.myModules.zshGlobal.enable {
+    users.defaultUserShell = pkgs.zsh;
+
+    programs.zsh = {
       enable = true;
-      autosuggestion.enable = true;
+      autosuggestions = {
+        enable = true;
+        strategy = [ "completion" ];
+        async = true;
+      };
       syntaxHighlighting.enable = true;
+      zsh-autoenv.enable = true;
       enableCompletion = true;
-      
-      oh-my-zsh = {
+      enableBashCompletion = true;
+      enableLsColors = true;
+      ohMyZsh = {
         enable = true;
         plugins = [ "git" "sudo" "docker" "history" "colorize" "direnv" ];
-      #	theme = "alanpeabody";
-	#theme = "tonotdo";
-	#theme = "tjkirch";
       };
-      
-      plugins = with pkgs; [
-	{
-	  file = "powerlevel10k.zsh-theme";
-	  name = "powerlevel10k";
-	  src = "${zsh-powerlevel10k}/share/zsh-powerlevel10k";
-	}
-	{
-	  file = "p10k.zsh";
-	  name = "powerlevel10k-config";
-	  src = ./p10k;
-	}
-      ];
-
-
-      initContent = ''
+      shellInit = ''
         flakeinit() {
           nix flake init --template "github:da-wilky/flake-templates#$1";
         }
@@ -40,37 +47,32 @@
           cd /home/samuel/dotfiles; git add .; git commit -m "$1"; git push; cd -;
         }
 
-	unset ZSH_AUTOSUGGEST_USE_ASYNC
+        unset ZSH_AUTOSUGGEST_USE_ASYNC
       '';
       shellAliases = {
         ".." = "cd ..";
         "-" = "cd -";
         v = "nvim";
         vim = "nvim";
-        nixtemplate = "flakeinit";
-	nixconfig = "nvim ~/dotfiles/system/configuration.nix";
+        nixconfig = "nvim ~/dotfiles/system/configuration.nix";
         nixprograms = "nvim ~/dotfiles/system/program.nix";
+        nixflake = "nvim ~/dotfiles/flake.nix";
         nixgit = "nvim ~/dotfiles/modules/default/git.nix";
-	nixzsh = "nvim ~/dotfiles/homes/default/zsh.nix";
-	nixnvim = "nvim ~/dotfiles/modules/default/neovim.nix";
-	nixflake = "nvim ~/dotfiles/flake.nix";
+        nixzsh = "nvim ~/dotfiles/modules/default/zsh.nix";
+        nixnvim = "nvim ~/dotfiles/modules/default/neovim.nix";
         nixdir = "echo \"use flake\" > .envrc && direnv allow";
         nixpull = "cd /home/samuel/dotfiles; git pull; cd -;";
-	nixgarbage = "sudo nix-collect-garbage --delete-old";
-	# vscodeserver = "code tunnel --accept-server-license-terms --name Homeserver";
-        # builddocker = "nix build && docker load < result && rm result";
-        # builddockerversion = "nix build .#version && docker load < result && rm result";
         builddocker = "nix build --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
         builddockerversion = "nix build .#version --no-link --print-out-paths | { read imagePath; docker load < \"$imagePath\"; }";
-	dc = "docker compose";
-	dup = "docker compose up -d";
+        dup = "docker compose up -d";
         ddown = "docker compose down";
         drestart = "docker compose down && docker compose up -d";
         dlogs = "docker compose logs";
-	dexec = "docker compose exec";
-	dsrm = "docker stack rm";
+        dexec = "docker compose exec";
+        dsrm = "docker stack rm";
         dsdeploy = "docker stack deploy --compose-file docker-compose.yml";
         dsservices = "docker stack services";
       };
     };
+  };
 }

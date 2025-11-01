@@ -1,22 +1,22 @@
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-25.05;
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     #inputs.nixpkgs.url = github:NixOS/nixpkgs/master;
 
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     vscode-server = {
-      url = github:nix-community/nixos-vscode-server;
+      url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     agenix = {
-      url = github:ryantm/agenix;
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
-      url = github:Mic92/sops-nix;
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
       #inputs.nixpkgs-stable.follows = "nixpkgs";
     };
@@ -26,7 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = github:nixos/nixos-hardware;
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # Raspberry Pi 5
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
@@ -34,18 +34,17 @@
 
   # Cache Server for Raspberry Pi 5
   nixConfig = {
-    extra-substituters = [
-      "https://nixos-raspberrypi.cachix.org"
-    ];
+    extra-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
     extra-trusted-public-keys = [
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, vscode-server, agenix, sops-nix, nixos-hardware, home-manager, nixos-raspberrypi, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, vscode-server, agenix, sops-nix
+    , nixos-hardware, home-manager, nixos-raspberrypi, ... }@inputs:
     let
       system = "x86_64-linux";
-      pi_system = "aarch64-linux";  
+      pi_system = "aarch64-linux";
 
       # agenix
       #agenixmodule = i@{ system ? "x86_64-linux", ... }:
@@ -55,126 +54,128 @@
       #	  environment.systemPackages = [ agenix.packages.${i.system}.default ];
       #	}
       #];
-    in
-    {
+    in {
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
-	inherit system;
-	specialArgs = { inherit inputs; };
-	modules = [
-	  ./system/homeserver/configuration.nix
-	  
-	  ./users/defaultUsers.nix
-	  ./users/nico.nix
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./system/homeserver/configuration.nix
 
-	  ./modules/default.nix
-	  ./modules/docker.nix
-	  ./modules/netbird.nix
-	  ./modules/others/nixld.nix
-	  #./modules/others/vscode-server.nix
+          # All core modules and users (loaded via default.nix, enable as needed)
+          ./modules/default.nix
 
-	  ./modules/ncs-wireguard-access.nix
+          # System-specific configuration
+          {
+            myModules.docker.enable = true;
+            myModules.netbird.enable = true;
+            myModules.nixld.enable = true;
+            myModules.ncsWireguard.enable = true;
+          }
 
-	  sops-nix.nixosModules.sops
-	  #vscode-server.nixosModules.default
-	  #({ config, pkgs, ... }: {
-	  #  services.vscode-server.enable = true;
-	  #  services.vscode-server.enableFHS = true;
-	  #})
-
-	  home-manager.nixosModules.home-manager
-	  ./modules/home-manager.nix
-	];
-	# ++ agenixmodule { inherit system; };
+          # External modules
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+        ];
       };
       nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
-	inherit system;
-	specialArgs = { inherit inputs; };
-	modules = [
-	  ./system/blu/configuration.nix
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./system/blu/configuration.nix
 
-	  ./users/defaultUsers.nix
+          # All core modules and users (loaded via default.nix, enable as needed)
+          ./modules/default.nix
 
-	  ./modules/default.nix
-	  ./modules/docker.nix
-	  ./modules/netbird.nix
-	  ./modules/others/nixld.nix
+          # System-specific configuration
+          {
+            myModules.docker.enable = true;
+            myModules.netbird.enable = true;
+            myModules.nixld.enable = true;
 
-	  sops-nix.nixosModules.sops
+						myModules.openssh.openFirewall = false;
+          }
 
-	  home-manager.nixosModules.home-manager
-	  #	Need this to use sops inside home-manager
-	  #{
-	  #  home-manager.sharedModules = [
-	  #    sops-nix.homeManagerModules.sops
-	  #  ];
-	  #}
-	  ./modules/home-manager.nix
-	];
-	# ++ agenixmodule { inherit system; };
+          # External modules
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+        ];
       };
       nixosConfigurations.pangolier = nixpkgs.lib.nixosSystem {
-	inherit system;
-	specialArgs = { inherit inputs; };
-	modules = [
-	  ./system/pangolier/configuration.nix
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./system/pangolier/configuration.nix
 
-	  ./users/defaultUsers.nix
+          # All core modules and users (loaded via default.nix, enable as needed)
+          ./modules/default.nix
 
-	  ./modules/default.nix
-	  ./modules/docker.nix
-	  ./modules/netbird.nix
-	  ./modules/others/nixld.nix
+          # System-specific configuration
+          {
+            myModules.docker.enable = true;
+            myModules.netbird.enable = true;
+            myModules.nixld.enable = true;
 
-	  sops-nix.nixosModules.sops
+						myModules.openssh.openFirewall = false;
+          }
 
-	  home-manager.nixosModules.home-manager
-	  ./modules/home-manager.nix
-	];
+          # External modules
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+        ];
       };
       nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
         system = pi_system;
-	specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs; };
         modules = [
-	  ./system/pibackups/configuration.nix
-          
-	  ./users/defaultUsers.nix
-	  ./users/pibackups.nix
-	  ./modules/default.nix
-	  ./modules/docker.nix
-	  ./modules/netbird.nix
-	  #./modules/others/hd-idle.nix
+          ./system/pibackups/configuration.nix
 
-	  nixos-hardware.nixosModules.raspberry-pi-4
-	  sops-nix.nixosModules.sops
-	
-	  home-manager.nixosModules.home-manager
-	  ./modules/home-manager.nix
-	];
-	# ++ agenixmodule { system = pi_system; };
+          # All core modules and users (loaded via default.nix, enable as needed)
+          ./modules/default.nix
+
+          # System-specific configuration
+          {
+            myModules.docker.enable = true;
+            myModules.netbird.enable = true;
+
+            myUsers.pibackups.enable = true;
+          }
+
+          # External modules
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          nixos-hardware.nixosModules.raspberry-pi-4
+        ];
       };
       nixosConfigurations.pi5dd = nixos-raspberrypi.lib.nixosSystem {
         system = pi_system;
-	specialArgs = { inherit inputs; nixos-raspberrypi = inputs.nixos-raspberrypi; };
+        specialArgs = {
+          inherit inputs;
+          nixos-raspberrypi = inputs.nixos-raspberrypi;
+        };
         modules = [
-	  # Raspberry Pi 5
-          ({...}: {
-	    imports = with nixos-raspberrypi.nixosModules; [
-              raspberry-pi-5.base
-            ];
+          # Raspberry Pi 5
+          ({ ... }: {
+            imports = with nixos-raspberrypi.nixosModules;
+              [ raspberry-pi-5.base ];
           })
 
-	  ./system/pi5dd/configuration.nix
+          ./system/pi5dd/configuration.nix
 
-          ./users/defaultUsers.nix
-	  ./users/pibackups.nix
-	  ./modules/default.nix
-	  ./modules/netbird.nix
-	  ./modules/docker.nix
+          # All core modules and users (loaded via default.nix, enable as needed)
+          ./modules/default.nix
 
-	  sops-nix.nixosModules.sops
+          # System-specific configuration
+          {
+            myModules.docker.enable = true;
+            myModules.netbird.enable = true;
+
+            myUsers.pibackups.enable = true;
+          }
+
+          # External modules
+          sops-nix.nixosModules.sops
 
           home-manager.nixosModules.home-manager
-          ./modules/home-manager.nix
         ];
       };
     };
