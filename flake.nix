@@ -92,7 +92,7 @@
             myModules.netbird.enable = true;
             myModules.nixld.enable = true;
 
-						myModules.openssh.openFirewall = false;
+	    myModules.openssh.openFirewall = false;
           }
 
           # External modules
@@ -111,11 +111,11 @@
 
           # System-specific configuration
           {
-            myModules.docker.enable = true;
-            myModules.netbird.enable = true;
-            myModules.nixld.enable = true;
+            myModules.podman.enable = true;
+	    myModules.podman.dockerSocket.enable = true;
+	    myModules.netbird.enable = true;
 
-						myModules.openssh.openFirewall = false;
+	    myModules.openssh.openFirewall = false;
           }
 
           # External modules
