@@ -111,8 +111,9 @@
 
           # System-specific configuration
           {
-            myModules.podman.enable = true;
-	    myModules.podman.dockerSocket.enable = true;
+            myModules.docker.enable = true;
+	    #myModules.podman.enable = true;
+	    #myModules.podman.dockerSocket.enable = true;
 	    myModules.netbird.enable = true;
 
 	    myModules.openssh.openFirewall = false;
