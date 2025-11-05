@@ -2,7 +2,9 @@
 {
   environment.systemPackages = with pkgs; [
     kubectl
-    kubernetes-helm
+    (wrapHelm kubernetes-helm {
+      plugins = with kubernetes-helmPlugins; [ helm-diff ];
+    })
     helmfile
 
     # CLI programs
