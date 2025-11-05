@@ -14,6 +14,9 @@
     ./docker.nix
     ./podman.nix
     
+    # Virtualization
+    ./libvirt.nix
+    
     # Networking
     ./netbird.nix
     ./ncs-wireguard-access.nix
