@@ -17,6 +17,11 @@ in {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/01d7af1a-c6dc-451c-a7b3-36797c2ffe15";
+      fsType = "ext4";
+    };
 
   programs.zsh.shellAliases = {
     nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#homeserver";
