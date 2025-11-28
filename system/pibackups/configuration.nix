@@ -34,7 +34,7 @@
   };
 
   sops.secrets.wireless-config-dd = {
-    sopsFile = ../../secrets/dd-wireless.yml;
+    sopsFile = ../../secrets/func/dd-wireless.yml;
     restartUnits = [ "wpa_supplicant-wlan0.service" ]; 
   };
 
