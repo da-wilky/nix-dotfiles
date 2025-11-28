@@ -61,6 +61,22 @@
         "type": "github"
       }
     },
+    "db_backup_scripts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740844326,
+        "narHash": "sha256-bnWqDUl1ShJChS6SrhWX3hvu9gonOC6M3/lFcbMLgnU=",
+        "ref": "refs/heads/master",
+        "rev": "725168b26ee7478ea739436620dc0cb2de213f60",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://github.com/da-wilky/db_backup_scripts.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/da-wilky/db_backup_scripts.git"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -234,6 +250,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "db_backup_scripts": "db_backup_scripts",
         "home-manager": "home-manager_2",
         "nixos-hardware": "nixos-hardware",
         "nixos-raspberrypi": "nixos-raspberrypi",

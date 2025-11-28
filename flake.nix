@@ -5,6 +5,11 @@
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    db_backup_scripts = {
+      url = "git+https://github.com/da-wilky/db_backup_scripts.git";
+      flake = false;
+    };
+
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,7 +46,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, vscode-server, agenix, sops-nix
-    , nixos-hardware, home-manager, nixos-raspberrypi, ... }@inputs:
+    , nixos-hardware, home-manager, nixos-raspberrypi, db_backup_scripts, ... }@inputs:
     let
       system = "x86_64-linux";
       pi_system = "aarch64-linux";

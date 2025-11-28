@@ -10,6 +10,7 @@
     sops
     htop
     btop
+    openssl
 
     # Languages
 

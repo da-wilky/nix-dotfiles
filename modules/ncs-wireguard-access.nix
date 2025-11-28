@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.myModules.ncsWireguard;
-  sopsFile = ../ncsystems-secrets.yml;
+  sopsFile = ../secrets/func/ncsystems.yml;
 in
 {
   options.myModules.ncsWireguard = {

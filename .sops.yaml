@@ -1,26 +1,33 @@
 keys:
   - &user_samuel age1vv57qn6twjl40dskrmt4ht42nccnrpyc5z09p2f4gcss6uuvmdtsst76np
-  - &sys_blu age160223x4fnyrzf30ae6c2jjmfqhmcqnychr2lcnuv9pkg4amv2phqxr78gw
+  - &sys_1blu age160223x4fnyrzf30ae6c2jjmfqhmcqnychr2lcnuv9pkg4amv2phqxr78gw
   - &sys_homeserver age153d00dlsmf926jkwu3p8c9wy3katt8k25flvnrjl87qhs2648ppqxuxeyl
   - &sys_pi5dd age1g4uyhsrfp29s43jqpctyvkf7wye4mzrr89y2f52qsyfmrqwens9q6yf2l5
   - &sys_pibackups age12c5adcye64hpqecdhjg0jw02ht73n5nzuagqudqhd033dms7dy3st3fsxn
   - &sys_pangolier age1h8mqhcrv3cew7ps3hf3vr50fwshxmn2aw2a7lpspkgz7d3qkjqxqqmhxqk
 
 creation_rules:
-  - path_regex: ^secrets.yml$
+  - path_regex: ^secrets/system/1blu.yml*$
     key_groups:
       - age:
         - *user_samuel
-        - *sys_blu
-        - *sys_pibackups
-        - *sys_homeserver
+        - *sys_1blu
+  - path_regex: ^secrets/system/pi5dd.yml$
+    key_groups:
+      - age:
+        - *user_samuel
         - *sys_pi5dd
-        - *sys_pangolier
-  - path_regex: ^ncsystems-secrets.yml$
+  - path_regex: ^secrets/system/pibackups.yml$
     key_groups:
       - age:
         - *user_samuel
+        - *sys_pibackups
+  - path_regex: ^secrets/func/ncsystems.yml$
+    key_groups:
+      - age:
         - *sys_homeserver
+
+
   - path_regex: system/pibackups/secrets.yml$
     key_groups:
       - age:
@@ -31,7 +38,7 @@ creation_rules:
     key_groups:
       - age:
         - *user_samuel
-        - *sys_blu
+        - *sys_1blu
         - *sys_homeserver
         - *sys_pibackups
         - *sys_pi5dd
