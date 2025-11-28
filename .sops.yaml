@@ -26,14 +26,13 @@ creation_rules:
     key_groups:
       - age:
         - *sys_homeserver
-
-
-  - path_regex: system/pibackups/secrets.yml$
+  - path_regex: ^secrets/func/dd-wireless.yml$
     key_groups:
       - age:
         - *user_samuel
         - *sys_pibackups
         - *sys_pi5dd
+
   - path_regex: users/secrets/samuel.yml$
     key_groups:
       - age:
