@@ -89,8 +89,8 @@
     openFirewall = true;
   };
 
-  sops.secrets.backup-password-pibackups = {
-    sopsFile = ../../secrets.yml;
+  sops.secrets.backup-password = {
+    sopsFile = ../../secrets/system/pibackups.yml;
   };
 
   services.restic.backups = {
@@ -106,7 +106,7 @@
 	"/home/*/.zsh_history"
       ];
       repository = "/data/backups/pibackups";
-      passwordFile = config.sops.secrets.backup-password-pibackups.path;
+      passwordFile = config.sops.secrets.backup-password.path;
       pruneOpts = [
 	"--keep-within-hourly 3d"
 	"--keep-within-daily 14d"
