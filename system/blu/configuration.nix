@@ -47,8 +47,8 @@
 
   services.openssh.ports = [ 3821 ];
 
-  sops.secrets.backup-password-1blu = {
-    sopsFile = ../../secrets.yml;
+  sops.secrets.backup-password = {
+    sopsFile = ../../secrets/system/1blu.yml;
   };
 
   services.restic.backups = {
@@ -68,7 +68,7 @@
 	"/home/*/.zsh_history"
       ];
       repository = "sftp:pi5dd:/data/backups/1blu";
-      passwordFile = config.sops.secrets.backup-password-1blu.path;
+      passwordFile = config.sops.secrets.backup-password.path;
       pruneOpts = [
 	"--keep-within-hourly 3d"
 	"--keep-within-daily 14d"
