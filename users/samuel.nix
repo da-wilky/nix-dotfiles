@@ -122,7 +122,7 @@ in
 
     # Sops secrets
     sops = mkIf cfg.enableSopsSecrets {
-      defaultSopsFile = ./secrets/samuel.yml;
+      defaultSopsFile = ../secrets/users/samuel.yml;
       secrets = mkMerge [
         # SSH key - conditional
         (mkIf cfg.loadSshKey {

@@ -32,8 +32,7 @@ creation_rules:
         - *user_samuel
         - *sys_pibackups
         - *sys_pi5dd
-
-  - path_regex: users/secrets/samuel.yml$
+  - path_regex: ^secrets/users/samuel.yml$
     key_groups:
       - age:
         - *user_samuel
@@ -42,3 +41,4 @@ creation_rules:
         - *sys_pibackups
         - *sys_pi5dd
         - *sys_pangolier
+
