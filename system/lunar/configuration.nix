@@ -7,8 +7,8 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
       ./program.nix
+      ./hardware-configuration.nix
       ../configuration.nix
       ../program.nix
     ];
@@ -19,22 +19,17 @@
   boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
   # Networking
-  networking.hostName = "pangolier";
+  networking.hostName = "lunar"; # Define your hostname.
   networking.firewall.interfaces."wt0" = {
     allowedTCPPorts = [ 3821 ];
   };
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   services.openssh.ports = [ 3821 ];
 
   programs.zsh.shellAliases = {
-    nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#pangolier";
-    nixeditc = "nvim ~/dotfiles/system/pangolier/configuration.nix";
-    nixeditp = "nvim ~/dotfiles/system/pangolier/program.nix";
+    nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#lunar";
+    nixeditc = "nvim ~/dotfiles/system/lunar/configuration.nix";
+    nixeditp = "nvim ~/dotfiles/system/lunar/program.nix";
   };
 
   security.sudo.wheelNeedsPassword = false;

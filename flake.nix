@@ -129,6 +129,28 @@
           home-manager.nixosModules.home-manager
         ];
       };
+      nixosConfigurations.lunar = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./system/lunar/configuration.nix
+
+          # All core modules and users (loaded via default.nix, enable as needed)
+          ./modules/default.nix
+
+          # System-specific configuration
+          {
+            myModules.docker.enable = true;
+	    myModules.netbird.enable = true;
+
+	    myModules.openssh.openFirewall = false;
+          }
+
+          # External modules
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+        ];
+      };
       nixosConfigurations.pangolier = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
