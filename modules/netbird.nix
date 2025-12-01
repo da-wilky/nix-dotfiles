@@ -80,7 +80,7 @@ with lib;
 
   config = mkIf config.myModules.netbird.enable {
     services.netbird.package = if config.myModules.netbird.useUnstable 
-      then inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.netbird
+      then inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.netbird
       else pkgs.netbird;
     
     services.netbird.clients = config.myModules.netbird.clients;

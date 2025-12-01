@@ -73,7 +73,7 @@ with lib;
       };
     };
     
-    extraConfig = mkOption {
+    settings = mkOption {
       type = types.attrs;
       default = {};
       description = "Additional git configuration";
@@ -96,7 +96,7 @@ with lib;
         signByDefault = config.myHomeModules.git.signing.signByDefault;
       };
       
-      extraConfig = mkMerge [
+      settings = mkMerge [
         { init.defaultBranch = config.myHomeModules.git.defaultBranch; }
         (mkIf (config.myHomeModules.git.userNameFile != null) {
           user.name = "!${pkgs.coreutils}/bin/cat ${config.myHomeModules.git.userNameFile}";
@@ -104,24 +104,23 @@ with lib;
         (mkIf (config.myHomeModules.git.userEmailFile != null) {
           user.email = "!${pkgs.coreutils}/bin/cat ${config.myHomeModules.git.userEmailFile}";
         })
-        config.myHomeModules.git.extraConfig
-      ];
-      
-      aliases = mkMerge [
         (mkIf config.myHomeModules.git.enableAliases {
-          c = "commit";
-          co = "checkout";
-          st = "status";
-          undo = "reset --soft HEAD^";
-          wt = "worktree";
-          wta = "worktree add";
-          wtl = "worktree list";
-          wtr = "worktree remove";
-          localadd = "add --intent-to-add";
-          localignore = "update-index --skip-worktree";
-          localunignore = "update-index --no-skip-worktree";
-        })
-        config.myHomeModules.git.customAliases
+          alias = {
+	    c = "commit";
+	    co = "checkout";
+	    st = "status";
+	    undo = "reset --soft HEAD^";
+	    wt = "worktree";
+	    wta = "worktree add";
+	    wtl = "worktree list";
+	    wtr = "worktree remove";
+	    localadd = "add --intent-to-add";
+	    localignore = "update-index --skip-worktree";
+	    localunignore = "update-index --no-skip-worktree";
+	  };
+	})
+        config.myHomeModules.git.settings
+        { alias = config.myHomeModules.git.customAliases; }
       ];
     };
   };
