@@ -35,6 +35,7 @@ with lib;
   config = mkIf config.myHomeModules.ssh.enable {
     programs.ssh = {
       enable = true;
+      enableDefaultConfig = false;
       matchBlocks = {
         "*" = {
           identitiesOnly = config.myHomeModules.ssh.identitiesOnly;
