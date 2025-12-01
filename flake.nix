@@ -209,6 +209,7 @@
           ({ ... }: {
             imports = with nixos-raspberrypi.nixosModules;
               [ raspberry-pi-5.base ];
+	    boot.loader.raspberryPi.bootloader = "kernel";
           })
 
           ./system/pi5dd/configuration.nix
