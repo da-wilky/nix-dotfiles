@@ -13,7 +13,7 @@ let
     # Call your existing script logic
     $POSTGRES /home/samuel/immich database "" "" "" DB_DATABASE_NAME DB_USERNAME &
     $POSTGRES /home/samuel/vaultwarden &
-    $POSTGRES /home/samuel/mail-archiver postgres "" "" "" "" "" mail_archiver &
+    $POSTGRES /home/samuel/mail-archiver postgres "" "" "" "" "" "" mail_archiver &
     $POSTGRES /home/samuel/solidtime database "" "" "" DB_DATABASE DB_USERNAME &
     wait
   '';
