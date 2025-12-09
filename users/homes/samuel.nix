@@ -16,11 +16,15 @@
 
   # Enable modules based on user preferences
   myHomeModules.git = {
-    enable = userConfig.enableGit or true;
+    enable = userConfig.git.enable or true;
     userNameFile = gitNameFile;
     userEmailFile = gitEmailFile;
   };
-  myHomeModules.zsh.enable = userConfig.enableZsh or true;
-  myHomeModules.neovim.enable = userConfig.enableNeovim or true;
-  myHomeModules.ssh.enable = userConfig.enableSsh or false;
+  myHomeModules.zsh.enable = userConfig.zsh.enable or true;
+  myHomeModules.neovim.enable = userConfig.neovim.enable or true;
+  myHomeModules.ssh = {
+    enable = userConfig.ssh.enable or false;
+    activateGithub = userConfig.ssh.activateGithub or true;
+    activatePibackups = userConfig.ssh.activatePibackups or false;
+  };
 }

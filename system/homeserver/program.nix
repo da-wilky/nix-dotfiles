@@ -1,6 +1,7 @@
 { pkgs, ...}:
 {
   environment.systemPackages = with pkgs; [
+    openssl
     kubectl
     (wrapHelm kubernetes-helm {
       plugins = with kubernetes-helmPlugins; [ helm-diff ];
