@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./program.nix
+      ./restic.nix
       ../configuration.nix
       ../program.nix
     ];
@@ -46,43 +47,6 @@
   };
 
   services.openssh.ports = [ 3821 ];
-
-  sops.secrets.backup-password = {
-    sopsFile = ../../secrets/system/1blu.yml;
-  };
-
-  services.restic.backups = {
-    serverbackup = {
-      initialize = true;
-      user = "root";
-      paths = [
-	"/home/samuel"
-	"/var/lib/docker/volumes/coolify-*"
-	"/var/lib/docker/volumes/icinga_*"
-	"/var/lib/docker/volumes/netbird_*"
-	"/var/lib/docker/volumes/tabby-web_*"
-	"/var/lib/docker/volumes/traefik-*"
-      ];
-      exclude = [
-	"/home/*/.cache"
-	"/home/*/.zsh_history"
-      ];
-      repository = "sftp:pi5dd:/data/backups/1blu";
-      passwordFile = config.sops.secrets.backup-password.path;
-      pruneOpts = [
-	"--keep-within-hourly 3d"
-	"--keep-within-daily 14d"
-	"--keep-within-weekly 1m"
-	"--keep-within-monthly 1y"
-      ];
-      timerConfig = {
-	# On 6 o'clock
-	OnCalendar = "*-*-* 06:00:00";
-	# Reschedule times missed cuz of downtime
-	Persistent = true;
-      };
-    };
-  };
 
   security.sudo.wheelNeedsPassword = false;
 
