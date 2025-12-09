@@ -37,6 +37,9 @@ in
       user = "root";
       paths = [
 	"/home/samuel"
+	"/data/immich"
+	"/data/mails"
+	"/data/others"
 	"/var/lib/docker/volumes/immich_*"
 	"/var/lib/docker/volumes/kimai_*"
 	"/var/lib/docker/volumes/solidtime_*"
