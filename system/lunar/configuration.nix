@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./program.nix
       ./hardware-configuration.nix
+      ./restic.nix
       ../configuration.nix
       ../program.nix
     ];
