@@ -10,6 +10,7 @@ in {
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./program.nix
+      ./restic.nix
       ../configuration.nix
       ../program.nix
   ];

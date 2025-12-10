@@ -55,8 +55,8 @@ in
       #backupPrepareCommand = "${backupPrepareScript}";
       timerConfig = {
 	# On 6 o'clock
-	OnCalendar = "*-*-* 04:00:00";
-	RandomizedDelaySec = "2h";
+	OnCalendar = "*-*-* 02:00:00";
+	RandomizedDelaySec = "4h";
 	# Reschedule times missed cuz of downtime
 	Persistent = true;
       };
