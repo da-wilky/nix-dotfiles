@@ -8,6 +8,11 @@ keys:
   - &sys_lunar age18538w2l57f7hwp9fs32g4fr2t3cds6l9hrve6pe07fq44wfp2s8qqk5wvu
 
 creation_rules:
+  - path_regex: ^secrets/system/homeserver.yml*$
+    key_groups:
+      - age:
+        - *user_samuel
+        - *sys_homeserver
   - path_regex: ^secrets/system/lunar.yml*$
     key_groups:
       - age:

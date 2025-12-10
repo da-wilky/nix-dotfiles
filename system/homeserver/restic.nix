@@ -5,22 +5,22 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  backupPrepareScript = pkgs.writeShellScript "restic-backup-prepare" ''
-    export PATH=${lib.makeBinPath [ pkgs.docker pkgs.coreutils pkgs.bash ]}:$PATH
-
-    POSTGRES="${pkgs.bash}/bin/bash ${inputs.db_backup_scripts}/postgres_backup.sh"
-
-    # Call your existing script logic
-    $POSTGRES /home/samuel/immich database "" "" "" DB_DATABASE_NAME DB_USERNAME &
-    $POSTGRES /home/samuel/vaultwarden &
-    $POSTGRES /home/samuel/mail-archiver postgres "" "" "" "" "" "" mail_archiver &
-    $POSTGRES /home/samuel/solidtime database "" "" "" DB_DATABASE DB_USERNAME &
-    wait
-  '';
+  #backupPrepareScript = pkgs.writeShellScript "restic-backup-prepare" ''
+  #  export PATH=${lib.makeBinPath [ pkgs.docker pkgs.coreutils pkgs.bash ]}:$PATH
+  #
+  #  POSTGRES="${pkgs.bash}/bin/bash ${inputs.db_backup_scripts}/postgres_backup.sh"
+  #
+  #  # Call your existing script logic
+  #  $POSTGRES /home/samuel/immich database "" "" "" DB_DATABASE_NAME DB_USERNAME &
+  #  $POSTGRES /home/samuel/vaultwarden &
+  #  $POSTGRES /home/samuel/mail-archiver postgres "" "" "" "" "" "" mail_archiver &
+  #  $POSTGRES /home/samuel/solidtime database "" "" "" DB_DATABASE DB_USERNAME &
+  #  wait
+  #'';
 in
 {
   sops.secrets = let
-    sopsFile = ../../secrets/system/pi5dd.yml;
+    sopsFile = ../../secrets/system/homeserver.yml;
   in
   {
     backup-password = {
@@ -37,13 +37,7 @@ in
       user = "root";
       paths = [
 	"/home/samuel"
-	"/data/immich"
-	"/data/mails"
-	"/data/others"
-	"/var/lib/docker/volumes/immich_*"
-	"/var/lib/docker/volumes/kimai_*"
-	"/var/lib/docker/volumes/solidtime_*"
-	"/var/lib/docker/volumes/opnform_*"
+	"/data"
       ];
       exclude = [
 	"/home/*/.cache"
@@ -57,7 +51,7 @@ in
 	"--keep-within-weekly 1m"
 	"--keep-within-monthly 1y"
       ];
-      backupPrepareCommand = "${backupPrepareScript}";
+      #backupPrepareCommand = "${backupPrepareScript}";
       timerConfig = {
 	# On 6 o'clock
 	OnCalendar = "*-*-* 02:00:00";
