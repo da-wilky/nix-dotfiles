@@ -13,9 +13,9 @@ let
 
     # Call your existing script logic
     $POSTGRES /home/samuel/apps/AppFlowy postgres &
-    $POSTGRES /home/samuel/apps/healthchecks db "" "" "" DB_NAME DB_USER &
+    $POSTGRES /home/samuel/apps/healthchecks db DB_NAME DB_USER &
     $POSTGRES /home/samuel/apps/n8n &
-    $MARIADB /home/samuel/apps/tabby-web db "" "" "" MARIADB_DATABASE MARIADB_USER MARIADB_PASSWORD &
+    $MARIADB /home/samuel/apps/tabby-web db MARIADB_DATABASE MARIADB_USER MARIADB_PASSWORD &
     wait
   '';
 in

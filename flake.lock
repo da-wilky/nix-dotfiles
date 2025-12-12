@@ -64,11 +64,11 @@
     "db_backup_scripts": {
       "flake": false,
       "locked": {
-        "lastModified": 1765546106,
-        "narHash": "sha256-2TlsSQZ7BTd4Fb7IvxyCQ0aY3xONTQk1dGdjRxA2Pwg=",
+        "lastModified": 1765547683,
+        "narHash": "sha256-4ZN2sil2KaDYbq1cnNmlzxdSpjmgFWTyiTBwd65a9hA=",
         "ref": "refs/heads/master",
-        "rev": "53453c371a42c5bed311f8ad05e6e0093d022e60",
-        "revCount": 7,
+        "rev": "55c36f81650f6e7f4176f0f0ef7b41c7c7f7647d",
+        "revCount": 8,
         "type": "git",
         "url": "https://github.com/da-wilky/db_backup_scripts.git"
       },
