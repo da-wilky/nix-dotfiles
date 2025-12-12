@@ -11,10 +11,10 @@ let
     POSTGRES="${pkgs.bash}/bin/bash ${inputs.db_backup_scripts}/postgres_backup.sh"
 
     # Call your existing script logic
-    $POSTGRES /home/samuel/immich database "" "" "" DB_DATABASE_NAME DB_USERNAME &
+    $POSTGRES /home/samuel/immich database DB_DATABASE_NAME DB_USERNAME &
     $POSTGRES /home/samuel/vaultwarden &
-    $POSTGRES /home/samuel/mail-archiver postgres "" "" "" "" "" "" mail_archiver &
-    $POSTGRES /home/samuel/solidtime database "" "" "" DB_DATABASE DB_USERNAME &
+    $POSTGRES /home/samuel/mail-archiver postgres "" "" /data/mails/mail-archiver/db_backup &
+    $POSTGRES /home/samuel/solidtime database DB_DATABASE DB_USERNAME &
     wait
   '';
 in
