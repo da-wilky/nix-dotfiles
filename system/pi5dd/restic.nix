@@ -15,6 +15,7 @@ let
     $POSTGRES /home/samuel/vaultwarden &
     $POSTGRES /home/samuel/mail-archiver postgres "" "" /data/mails/mail-archiver/db_backup &
     $POSTGRES /home/samuel/solidtime database DB_DATABASE DB_USERNAME &
+    $POSTGRES /home/samuel/TimeTracker &
     wait
   '';
 in
@@ -44,6 +45,7 @@ in
 	"/var/lib/docker/volumes/kimai_*"
 	"/var/lib/docker/volumes/solidtime_*"
 	"/var/lib/docker/volumes/opnform_*"
+	"/var/lib/docker/volumes/timetracker_*"
       ];
       exclude = [
 	"/home/*/.cache"
