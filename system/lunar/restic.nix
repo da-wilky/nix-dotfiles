@@ -13,6 +13,7 @@ let
     # Call your existing script logic
     $POSTGRES /home/samuel/apps/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
     $POSTGRES /home/samuel/apps/shlink db DB_NAME DB_USER &
+    $POSTGRES /home/samuel/apps/keycloak &
     wait
   '';
 in
