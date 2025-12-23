@@ -5,19 +5,16 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  #backupPrepareScript = pkgs.writeShellScript "restic-backup-prepare" ''
-  #  export PATH=${lib.makeBinPath [ pkgs.docker pkgs.coreutils pkgs.bash ]}:$PATH
-  #
-  #  POSTGRES="${pkgs.bash}/bin/bash ${inputs.db_backup_scripts}/postgres_backup.sh"
-  #  MARIADB="${pkgs.bash}/bin/bash ${inputs.db_backup_scripts}/mariadb_backup.sh"
-  #
-  #  # Call your existing script logic
-  #  $POSTGRES /home/samuel/apps/AppFlowy postgres &
-  #  $POSTGRES /home/samuel/apps/healthchecks db "" "" "" DB_NAME DB_USER &
-  #  $POSTGRES /home/samuel/apps/n8n &
-  #  $MARIADB /home/samuel/apps/tabby-web db "" "" "" MARIADB_DATABASE MARIADB_USER MARIADB_PASSWORD &
-  #  wait
-  #'';
+  backupPrepareScript = pkgs.writeShellScript "restic-backup-prepare" ''
+    export PATH=${lib.makeBinPath [ pkgs.docker pkgs.coreutils pkgs.bash ]}:$PATH
+  
+    POSTGRES="${pkgs.bash}/bin/bash ${inputs.db_backup_scripts}/postgres_backup.sh"
+  
+    # Call your existing script logic
+    $POSTGRES /home/samuel/apps/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
+    $POSTGRES /home/samuel/apps/shlink db DB_NAME DB_USER &
+    wait
+  '';
 in
 {
   sops.secrets = let
@@ -39,6 +36,8 @@ in
       paths = [
 	"/home/samuel"
 	"/var/lib/docker/volumes/wazuh_*"
+	"/var/lib/docker/volumes/resource-planning_*"
+	"/var/lib/docker/volumes/shlink_*"
       ];
       exclude = [
 	"/home/*/.cache"
@@ -52,7 +51,7 @@ in
 	"--keep-within-weekly 1m"
 	"--keep-within-monthly 1y"
       ];
-      #backupPrepareCommand = "${backupPrepareScript}";
+      backupPrepareCommand = "${backupPrepareScript}";
       timerConfig = {
 	# On 6 o'clock
 	OnCalendar = "*-*-* 02:00:00";
