@@ -27,6 +27,8 @@
 
   services.openssh.ports = [ 3821 ];
 
+  services.cron.enable = true;
+
   programs.zsh.shellAliases = {
     nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#lunar";
     nixeditc = "nvim ~/dotfiles/system/lunar/configuration.nix";
