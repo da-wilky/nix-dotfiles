@@ -26,5 +26,6 @@
     enable = userConfig.ssh.enable or false;
     activateGithub = userConfig.ssh.activateGithub or true;
     activatePibackups = userConfig.ssh.activatePibackups or false;
+    extraMatchBlocks = userConfig.ssh.extraMatchBlocks or { };
   };
 }

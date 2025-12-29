@@ -75,6 +75,15 @@
             myModules.netbird.enable = true;
             myModules.nixld.enable = true;
             myModules.ncsWireguard.enable = true;
+
+            myUsers.samuel.homeModules.ssh.extraMatchBlocks = {
+              "gitlab.rn.inf.tu-dresden.de" = {
+                hostname = "gitlab.rn.inf.tu-dresden.de";
+                user = "git";
+                port = 22;
+                identityFile = "~/.ssh/tu";
+              };
+            };
             
             # Libvirt/KVM virtualization
             myModules.libvirt = {

@@ -93,6 +93,19 @@ in {
           default = false;
           description = "Activate SSH key for PiBackups";
         };
+
+        extraMatchBlocks = mkOption {
+          type = types.attrsOf (types.attrsOf types.anything);
+          default = { };
+          description = "Additional SSH match blocks for home-manager SSH module";
+          example = {
+            "example.com" = {
+              hostname = "example.com";
+              user = "myuser";
+              port = 2222;
+            };
+          };
+        };
       };
     };
   };
