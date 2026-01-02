@@ -24,6 +24,9 @@
     # Development tools
     ./tmux.nix
     
+    # Backup
+    ./restic-backup.nix
+    
     # Other utilities
     ./others/nixld.nix
     ./others/vscode-server.nix

@@ -48,6 +48,16 @@ creation_rules:
         - *user_samuel
         - *sys_pibackups
         - *sys_pi5dd
+  - path_regex: ^secrets/func/healthchecks.yml$
+    key_groups:
+      - age:
+        - *user_samuel
+        - *sys_1blu
+        - *sys_homeserver
+        - *sys_lunar
+        - *sys_pangolier
+        - *sys_pi5dd
+        - *sys_pibackups
   - path_regex: ^secrets/users/samuel.yml$
     key_groups:
       - age:
