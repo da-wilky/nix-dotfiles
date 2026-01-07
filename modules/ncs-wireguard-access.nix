@@ -13,13 +13,13 @@ in
     enableMainInterface = mkOption {
       type = types.bool;
       default = true;
-      description = "Enable main wireguard interface (wgnc)";
+      description = "Enable main wireguard interface (ncswg-nc-netz)";
     };
     
-    enable172Interface = mkOption {
+    enableHMTInterface = mkOption {
       type = types.bool;
       default = true;
-      description = "Enable 172 wireguard interface (wgnci)";
+      description = "Enable HMT wireguard interface (ncswg-hmt)";
     };
   };
 
@@ -27,12 +27,12 @@ in
     sops = {
       secrets = mkMerge [
         (mkIf cfg.enableMainInterface {
-          nc-systems-wireguard-config = {
+          ncswg-nc-netz = {
             inherit sopsFile;
           };
         })
-        (mkIf cfg.enable172Interface {
-          nc-systems-wireguard-172-config = {
+        (mkIf cfg.enableHMTInterface {
+          ncswg-hmt = {
             inherit sopsFile;
           };
         })
@@ -43,10 +43,10 @@ in
       wg-quick = {
         interfaces = mkMerge [
           (mkIf cfg.enableMainInterface {
-            wgnc.configFile = config.sops.secrets.nc-systems-wireguard-config.path;
+            ncswg-nc-netz.configFile = config.sops.secrets.ncswg-nc-netz.path;
           })
-          (mkIf cfg.enable172Interface {
-            wgnci.configFile = config.sops.secrets.nc-systems-wireguard-172-config.path;
+          (mkIf cfg.enableHMTInterface {
+            ncswg-hmt.configFile = config.sops.secrets.ncswg-hmt.path;
           })
         ];
       };

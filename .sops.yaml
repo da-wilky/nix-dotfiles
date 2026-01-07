@@ -41,6 +41,7 @@ creation_rules:
   - path_regex: ^secrets/func/ncsystems.yml$
     key_groups:
       - age:
+        - *user_samuel
         - *sys_homeserver
   - path_regex: ^secrets/func/dd-wireless.yml$
     key_groups:
