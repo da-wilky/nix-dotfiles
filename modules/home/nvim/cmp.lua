@@ -59,13 +59,29 @@
     matching = { disallow_symbol_nonprefix_matching = false }
   })
 
-  -- Set up lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  local lspconfig = require('lspconfig')
-  lspconfig['docker_compose_language_service'].setup {
-    capabilities = capabilities
-  }
-  lspconfig['nixd'].setup {
-    capabilities = capabilities
-  }
+--  -- Set up lspconfig.
+--  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+--  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+--  local lspconfig = require('lspconfig')
+--  lspconfig['docker_compose_language_service'].setup {
+--    capabilities = capabilities
+--  }
+--  lspconfig['nixd'].setup {
+--    capabilities = capabilities
+--  }
+
+local capabilities = vim.tbl_deep_extend (
+  'force',
+  vim.lsp.protocol.make_client_capabilities(),
+  require('cmp_nvim_lsp').default_capabilities()
+)
+
+vim.lsp.config('docker_compose_language_service', {
+  capabilities = capabilities,
+})
+
+vim.lsp.config('nixd', {
+  capabilities = capabilities,
+})
+
+vim.lsp.enable({ 'docker_compose_language_service', 'nixd' })

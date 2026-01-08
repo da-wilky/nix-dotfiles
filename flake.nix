@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     #inputs.nixpkgs.url = github:NixOS/nixpkgs/master;
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -27,14 +27,22 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware";
+      # inputs.nixpkgs.follows = "nixpkgs"; # is non existent
+    };
 
+    # nixpkgs25_05.url = "github:NixOS/nixpkgs/nixos-25.05";
     # Raspberry Pi 5
-    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    nixos-raspberrypi = {
+      url = "github:nvmd/nixos-raspberrypi/main";
+      #inputs.nixpkgs.follows = "nixpkgs25_05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Cache Server for Raspberry Pi 5
@@ -61,7 +69,7 @@
       #];
     in {
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
-        inherit system;
+	inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/homeserver/configuration.nix
@@ -116,7 +124,7 @@
         ];
       };
       nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
-        inherit system;
+	inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/blu/configuration.nix
@@ -139,7 +147,7 @@
         ];
       };
       nixosConfigurations.lunar = nixpkgs.lib.nixosSystem {
-        inherit system;
+	inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/lunar/configuration.nix
@@ -161,7 +169,7 @@
         ];
       };
       nixosConfigurations.pangolier = nixpkgs.lib.nixosSystem {
-        inherit system;
+	inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/pangolier/configuration.nix
@@ -185,7 +193,7 @@
         ];
       };
       nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
-        system = pi_system;
+	system = pi_system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/pibackups/configuration.nix
@@ -208,7 +216,7 @@
         ];
       };
       nixosConfigurations.pi5dd = nixos-raspberrypi.lib.nixosSystem {
-        system = pi_system;
+	system = pi_system;
         specialArgs = {
           inherit inputs;
           nixos-raspberrypi = inputs.nixos-raspberrypi;
@@ -220,6 +228,13 @@
               [ raspberry-pi-5.base ];
 	    boot.loader.raspberryPi.bootloader = "kernel";
           })
+	  #{
+	  #  boot.loader.raspberryPi = {
+	  #    enable = true;
+	  #    bootPath = "/boot";
+	  #    bootloader = "kernel";
+	  #  };
+	  #}
 
           ./system/pi5dd/configuration.nix
 
@@ -236,7 +251,6 @@
 
           # External modules
           sops-nix.nixosModules.sops
-
           home-manager.nixosModules.home-manager
         ];
       };
