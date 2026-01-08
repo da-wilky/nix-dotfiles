@@ -53,6 +53,7 @@ with lib;
   config = mkIf config.myHomeModules.ssh.enable {
     programs.ssh = {
       enable = true;
+      enableDefaultConfig = false;
       matchBlocks = mkMerge [
         (mkIf config.myHomeModules.ssh.identitiesOnly {
           "*" = { identitiesOnly = true; };

@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    #inputs.nixpkgs.url = github:NixOS/nixpkgs/master;
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -36,12 +35,9 @@
       # inputs.nixpkgs.follows = "nixpkgs"; # is non existent
     };
 
-    # nixpkgs25_05.url = "github:NixOS/nixpkgs/nixos-25.05";
     # Raspberry Pi 5
     nixos-raspberrypi = {
       url = "github:nvmd/nixos-raspberrypi/main";
-      #inputs.nixpkgs.follows = "nixpkgs25_05";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
