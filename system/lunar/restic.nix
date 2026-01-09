@@ -13,6 +13,7 @@
         "/var/lib/docker/volumes/wazuh_*"
         "/var/lib/docker/volumes/resource-planning_*"
         "/var/lib/docker/volumes/shlink_*"
+        "/var/lib/docker/volumes/netbird_*"
       ];
       backupSopsFile = ../../secrets/system/lunar.yml;
       

@@ -12,7 +12,6 @@
         "/home/samuel"
         "/var/lib/docker/volumes/traefik-*"
         "/var/lib/docker/volumes/appflowy_*"
-        "/var/lib/docker/volumes/netbird_*"
         "/var/lib/docker/volumes/tabby-web_*"
       ];
       backupSopsFile = ../../secrets/system/1blu.yml;
