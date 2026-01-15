@@ -12,19 +12,19 @@ in
     
     enableMainInterface = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "Enable main wireguard interface (ncswg-nc-netz)";
     };
     
     enableHMTInterface = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "Enable HMT wireguard interface (ncswg-hmt)";
     };
 
     enableNCTestInterface = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "Enable NC Test wireguard interface (ncswg-nc-test)";
     };
   };

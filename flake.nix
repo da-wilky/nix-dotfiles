@@ -78,7 +78,12 @@
             myModules.docker.enable = true;
             myModules.netbird.enable = true;
             myModules.nixld.enable = true;
-            myModules.ncsWireguard.enable = true;
+            myModules.ncsWireguard = {
+              enable = true;
+              enableMainInterface = true;
+              enableHMTInterface = true;
+              enableNCTestInterface = true;
+            };
 
             myUsers.samuel.homeModules.ssh.extraMatchBlocks = {
               "gitlab.rn.inf.tu-dresden.de" = {
