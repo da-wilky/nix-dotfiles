@@ -93,6 +93,32 @@
                 identityFile = "~/.ssh/tu";
               };
             };
+            
+            # Incus container and VM management
+            myModules.incus = {
+              enable = true;
+              ui.enable = false;
+              users = [ "samuel" ];
+              
+              preseed = {
+                storagePool = "default";
+                storageDriver = "dir";
+                networkBridge = "incusbr0";
+                networkAddress = "10.18.10.1/24";
+              };
+              
+              instances = {
+                ubuntu-container = {
+                  name = "ubuntu-container";
+                  type = "container";
+                  memory = "2GiB";
+                  cpus = 2;
+                  diskSize = "20GiB";
+                  image = "images:ubuntu/24.04";
+                  autostart = true;
+                };
+              };
+            };
           }
 
           # External modules
