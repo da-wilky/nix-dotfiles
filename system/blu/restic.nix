@@ -17,10 +17,12 @@
       backupSopsFile = ../../secrets/system/1blu.yml;
       
       extraPrepareCommands = ''
-        $POSTGRES /home/samuel/apps/AppFlowy postgres &
-        $POSTGRES /home/samuel/apps/healthchecks db DB_NAME DB_USER &
-        $POSTGRES /home/samuel/apps/n8n &
-        $MARIADB /home/samuel/apps/tabby-web db MARIADB_DATABASE MARIADB_USER MARIADB_PASSWORD &
+        FOLDER="/home/samuel/apps"
+
+	$POSTGRES $FOLDER/AppFlowy postgres &
+        $POSTGRES $FOLDER/healthchecks db DB_NAME DB_USER &
+        $POSTGRES $FOLDER/n8n &
+        $MARIADB $FOLDER/tabby-web db MARIADB_DATABASE MARIADB_USER MARIADB_PASSWORD &
         wait
       '';
     };
