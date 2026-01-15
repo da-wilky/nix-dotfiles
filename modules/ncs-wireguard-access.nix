@@ -43,7 +43,7 @@ in
           };
         })
         (mkIf cfg.enableNCTestInterface {
-          ncswg-nc-testnetz = {
+          ncswg-nc-test = {
             inherit sopsFile;
           };
         })
@@ -60,7 +60,7 @@ in
             ncswg-hmt.configFile = config.sops.secrets.ncswg-hmt.path;
           })
           (mkIf cfg.enableNCTestInterface {
-            ncswg-nc-testnetz.configFile = config.sops.secrets.ncswg-nc-testnetz.path;
+            ncswg-nc-test.configFile = config.sops.secrets.ncswg-nc-test.path;
           })
         ];
       };
