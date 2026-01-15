@@ -18,9 +18,11 @@
       backupSopsFile = ../../secrets/system/lunar.yml;
       
       extraPrepareCommands = ''
-        $POSTGRES /home/samuel/apps/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
-        $POSTGRES /home/samuel/apps/shlink db DB_NAME DB_USER &
-        $POSTGRES /home/samuel/apps/keycloak &
+	FOLDER="/home/samuel/apps"
+	
+	$POSTGRES $FOLDER/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
+        $POSTGRES $FOLDER/shlink db DB_NAME DB_USER &
+        $POSTGRES $FOLDER/keycloak &
         wait
       '';
     };
