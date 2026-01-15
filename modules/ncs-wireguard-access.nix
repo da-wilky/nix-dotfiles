@@ -21,6 +21,12 @@ in
       default = true;
       description = "Enable HMT wireguard interface (ncswg-hmt)";
     };
+
+    enableNCTestInterface = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enable NC Test wireguard interface (ncswg-nc-test)";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -36,6 +42,11 @@ in
             inherit sopsFile;
           };
         })
+        (mkIf cfg.enableNCTestInterface {
+          ncswg-nc-testnetz = {
+            inherit sopsFile;
+          };
+        })
       ];
     };
 
@@ -47,6 +58,9 @@ in
           })
           (mkIf cfg.enableHMTInterface {
             ncswg-hmt.configFile = config.sops.secrets.ncswg-hmt.path;
+          })
+          (mkIf cfg.enableNCTestInterface {
+            ncswg-nc-testnetz.configFile = config.sops.secrets.ncswg-nc-testnetz.path;
           })
         ];
       };
