@@ -15,18 +15,19 @@
         "/data/others"
         "/var/lib/docker/volumes/immich_*"
         "/var/lib/docker/volumes/kimai_*"
-        "/var/lib/docker/volumes/solidtime_*"
         "/var/lib/docker/volumes/opnform_*"
+        "/var/lib/docker/volumes/solidtime_*"
         "/var/lib/docker/volumes/timetracker_*"
       ];
       backupSopsFile = ../../secrets/system/pi5dd.yml;
       
       extraPrepareCommands = ''
-        $POSTGRES /home/samuel/immich database DB_DATABASE_NAME DB_USERNAME &
-        $POSTGRES /home/samuel/vaultwarden &
-        $POSTGRES /home/samuel/mail-archiver postgres "" "" /data/mails/mail-archiver/db_backup &
-        $POSTGRES /home/samuel/solidtime database DB_DATABASE DB_USERNAME &
-        $POSTGRES /home/samuel/TimeTracker &
+	FOLDER="/home/samuel/apps"
+	$POSTGRES $FOLDER/immich database DB_DATABASE_NAME DB_USERNAME &
+        $POSTGRES $FOLDER/vaultwarden &
+        $POSTGRES $FOLDER/TimeTracker &
+        # $POSTGRES $FOLDER/other/mail-archiver postgres "" "" /data/mails/mail-archiver/db_backup &
+        # $POSTGRES $FOLDER/other/solidtime database DB_DATABASE DB_USERNAME &
         wait
       '';
     };
