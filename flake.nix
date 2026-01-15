@@ -93,30 +93,6 @@
                 identityFile = "~/.ssh/tu";
               };
             };
-            
-            # Libvirt/KVM virtualization
-            myModules.libvirt = {
-              enable = true;
-              users = [ "samuel" ];
-              bridge = {
-                enable = true;
-                interface = "vmbr0";
-                physicalInterface = "enp2s0";
-              };
-              vms = {
-                ubuntu-vm = {
-                  name = "ubuntu-vm";
-                  memory = 4096;
-                  cpus = 4;
-                  diskSize = "100G";
-                  diskPath = "/data/vm/disk/ubuntu-vm.qcow2";
-                  imagePath = "/data/vm/iso/ubuntu-24.04.3-live-server-amd64.iso";
-                  imageFormat = "iso";
-                  autostart = false;
-                  bridgeInterface = "vmbr0";
-                };
-              };
-            };
           }
 
           # External modules
