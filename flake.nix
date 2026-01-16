@@ -39,6 +39,12 @@
     nixos-raspberrypi = {
       url = "github:nvmd/nixos-raspberrypi/main";
     };
+
+    # MicroVM support
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Cache Server for Raspberry Pi 5
@@ -50,7 +56,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, vscode-server, agenix, sops-nix
-    , nixos-hardware, home-manager, nixos-raspberrypi, db_backup_scripts, ... }@inputs:
+    , nixos-hardware, home-manager, nixos-raspberrypi, db_backup_scripts, microvm, ... }@inputs:
     let
       system = "x86_64-linux";
       pi_system = "aarch64-linux";
@@ -69,9 +75,13 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./system/homeserver/configuration.nix
+          ./system/homeserver/microvm-incus.nix
 
           # All core modules and users (loaded via default.nix, enable as needed)
           ./modules/default.nix
+
+          # MicroVM support
+          microvm.nixosModules.host
 
           # System-specific configuration
           {
@@ -95,30 +105,31 @@
             };
             
             # Incus container and VM management
-            myModules.incus = {
-              enable = true;
-              ui.enable = false;
-              users = [ "samuel" ];
+            # myModules.incus = {
+            #   enable = true;
+            #   ui.enable = false;
+            #   users = [ "samuel" ];
               
-              preseed = {
-                storagePool = "default";
-                storageDriver = "dir";
-                networkBridge = "incusbr0";
-                networkAddress = "10.18.10.1/24";
-              };
+            #   preseed = {
+            #     storagePool = "default";
+            #     storageDriver = "dir";
+            #     networkBridge = "incusbr0";
+            #     networkAddress = "10.18.10.1/24";
+            #   };
               
-              instances = {
-                ubuntu-container = {
-                  name = "ubuntu-container";
-                  type = "container";
-                  memory = "2GiB";
-                  cpus = 2;
-                  diskSize = "20GiB";
-                  image = "images:ubuntu/24.04";
-                  autostart = true;
-                };
-              };
-            };
+            #   instances = {
+            #     ubuntu-1 = {
+            #       name = "ubuntu-1";
+            #       type = "container";
+            #       memory = "2GiB";
+            #       cpus = 2;
+            #       diskSize = "20GiB";
+            #       image = "images:ubuntu/24.04";
+            #       autostart = true;
+            #       ipAddress = "10.18.10.101";
+            #     };
+            #   };
+            # };
           }
 
           # External modules
