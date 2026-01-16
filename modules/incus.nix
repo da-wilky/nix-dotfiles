@@ -71,6 +71,13 @@ let
         description = "Network bridge to attach the instance to";
       };
       
+      ipAddress = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Static IPv4 address for the instance (CIDR notation, e.g., 10.18.10.50/24). If null, DHCP will be used.";
+        example = "10.18.10.100/24";
+      };
+      
       config = mkOption {
         type = types.attrsOf types.str;
         default = {};
@@ -247,6 +254,7 @@ in {
             diskSize = "20GiB";
             image = "images:ubuntu/22.04";
             autostart = true;
+            ipAddress = "10.18.10.50/24";
           };
           debian-vm = {
             name = "debian-vm";
@@ -256,6 +264,7 @@ in {
             diskSize = "50GiB";
             image = "images:debian/12";
             autostart = true;
+            ipAddress = "10.18.10.100/24";
             config = {
               "security.secureboot" = "false";
             };
@@ -411,6 +420,12 @@ in {
               ${incusCmd} config set ${instanceConfig.name} limits.memory.hugepages false || true
               ''}
               
+              ${optionalString (instanceConfig.ipAddress != null) ''
+              # Configure static IP address
+              echo "[${instanceConfig.name}] Configuring static IP: ${instanceConfig.ipAddress}"
+              ${incusCmd} config device override ${instanceConfig.name} eth0 ipv4.address=${instanceConfig.ipAddress}
+              ''}
+              
               echo "[${instanceConfig.name}] Instance created successfully"
             else
               echo "[${instanceConfig.name}] Instance already exists, updating configuration..."
@@ -423,6 +438,12 @@ in {
               ${concatMapStringsSep "\n" (key: 
                 "${incusCmd} config set ${instanceConfig.name} ${key} ${instanceConfig.config.${key}} || true"
               ) (attrNames instanceConfig.config)}
+              
+              # Update static IP if specified
+              ${optionalString (instanceConfig.ipAddress != null) ''
+              echo "[${instanceConfig.name}] Updating static IP: ${instanceConfig.ipAddress}"
+              ${incusCmd} config device override ${instanceConfig.name} eth0 ipv4.address=${instanceConfig.ipAddress} || true
+              ''}
             fi
             
             # Configure autostart
