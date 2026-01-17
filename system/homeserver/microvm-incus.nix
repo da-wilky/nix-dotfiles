@@ -5,12 +5,12 @@ let
   vmName = "k3s-cluster-1";
   storagePath = "/data/microvms/${vmName}";
   hostExternalInterface = "enp2s0"; # Host's internet-facing interface
-  
+
   # SSH authorized keys for VM root access
   sshAuthorizedKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAWEue89TqiVnWtTnBka40kV9md2ImfV2cpVgR/kgUS samuel@nixos"
   ];
-  
+
   # VM network configuration
   vmNetwork = {
     subnet = "192.168.100";
@@ -19,30 +19,47 @@ let
     bridgeName = "virbr-incus";
     tapId = "vm-incus";
   };
-  
+
   # Container network configuration
   containerNetwork = {
     subnet = "10.20.30";
     gatewayIp = "10.20.30.1";
     bridgeName = "incusbr0";
   };
-  
+
   # VM resources
   vmResources = {
     vcpu = 4;
     memory = 8192; # MB
     diskSize = 102400; # MB (100GB)
   };
-  
+
   # Container defaults
   containerDefaults = {
     memory = "2GiB";
     cpus = 2;
     diskSize = "20GiB";
-    image = "images:ubuntu/24.04";
+    image = "images:ubuntu/noble/cloud";
   };
-in
-{
+
+  cloudInit = ''
+    #cloud-config
+    package_update: true
+    packages:
+      - openssh-server
+    
+    users:
+      - name: samuel
+        gecos: Samuel
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        ssh_authorized_keys:${lib.concatMapStrings (key: "\n      - ${key}") sshAuthorizedKeys}
+    
+    runcmd:
+      - systemctl enable ssh || systemctl enable sshd
+      - systemctl restart ssh || systemctl restart sshd
+  '';
+in {
   # MicroVM configuration for running Incus with privileged containers
   microvm.vms.${vmName} = {
     # Autostart the VM on boot
@@ -57,7 +74,7 @@ in
       microvm = {
         # hypervisor = "qemu";
         hypervisor = "cloud-hypervisor";
-        
+
         vcpu = vmResources.vcpu;
         mem = vmResources.memory;
 
@@ -128,6 +145,7 @@ in
             autostart = true;
             ipAddress = "${containerNetwork.subnet}.101";
             config = {
+              "cloud-init.user-data" = cloudInit;
               "security.privileged" = "true";
               "security.nesting" = "true";
             };
@@ -143,6 +161,7 @@ in
             autostart = true;
             ipAddress = "${containerNetwork.subnet}.102";
             config = {
+              "cloud-init.user-data" = cloudInit;
               "security.privileged" = "true";
               "security.nesting" = "true";
             };
@@ -158,6 +177,7 @@ in
             autostart = true;
             ipAddress = "${containerNetwork.subnet}.103";
             config = {
+              "cloud-init.user-data" = cloudInit;
               "security.privileged" = "true";
               "security.nesting" = "true";
             };
@@ -202,13 +222,11 @@ in
     matchConfig.Name = vmNetwork.bridgeName;
     address = [ "${vmNetwork.hostIp}/24" ];
 
-    routes = [
-      {
-        Destination = "${containerNetwork.subnet}.0/24";
-        Gateway = vmNetwork.vmIp;
-        GatewayOnLink = true;
-      }
-    ];
+    routes = [{
+      Destination = "${containerNetwork.subnet}.0/24";
+      Gateway = vmNetwork.vmIp;
+      GatewayOnLink = true;
+    }];
   };
 
   # All vm-* TAPs attached to the bridge
