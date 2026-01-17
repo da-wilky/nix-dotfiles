@@ -47,6 +47,8 @@ let
     package_update: true
     packages:
       - openssh-server
+      - iptables
+      - curl
     
     users:
       - name: samuel
@@ -59,6 +61,16 @@ let
       - systemctl enable ssh || systemctl enable sshd
       - systemctl restart ssh || systemctl restart sshd
   '';
+
+  # k3s-specific configuration for LXC containers
+  k3sContainerConfig = {
+    "raw.lxc" = ''
+      lxc.mount.auto = proc:rw sys:rw cgroup:rw
+      lxc.apparmor.profile = unconfined
+      lxc.cap.drop =
+    '';
+    "linux.kernel_modules" = "ip_tables,nf_conntrack,br_netfilter,overlay";
+  };
 in {
   # MicroVM configuration for running Incus with privileged containers
   microvm.vms.${vmName} = {
@@ -120,7 +132,10 @@ in {
 
       # Enable IP forwarding in the VM
       boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
-
+      
+      # Kernel Modules
+      boot.kernelModules = [ "br_netfilter" "overlay" "ip_tables" "iptable_nat" "iptable_filter" ];
+  
       # Enable Incus with the existing module
       myModules.incus = {
         enable = true;
@@ -148,7 +163,7 @@ in {
               "cloud-init.user-data" = cloudInit;
               "security.privileged" = "true";
               "security.nesting" = "true";
-            };
+            } // k3sContainerConfig;
           };
 
           ubuntu-2 = {
@@ -164,7 +179,7 @@ in {
               "cloud-init.user-data" = cloudInit;
               "security.privileged" = "true";
               "security.nesting" = "true";
-            };
+            } // k3sContainerConfig;
           };
 
           ubuntu-3 = {
@@ -180,7 +195,7 @@ in {
               "cloud-init.user-data" = cloudInit;
               "security.privileged" = "true";
               "security.nesting" = "true";
-            };
+            } // k3sContainerConfig;
           };
         };
       };
