@@ -20,7 +20,10 @@
     userNameFile = gitNameFile;
     userEmailFile = gitEmailFile;
   };
-  myHomeModules.zsh.enable = userConfig.zsh.enable or true;
+  myHomeModules.zsh = {
+    enable = userConfig.zsh.enable or true;
+    enableKubectx = userConfig.zsh.enableKubectx or false;
+  };
   myHomeModules.neovim.enable = userConfig.neovim.enable or true;
   myHomeModules.ssh = {
     enable = userConfig.ssh.enable or false;

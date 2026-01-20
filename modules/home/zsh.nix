@@ -30,6 +30,12 @@ with lib;
       description = "Enable Powerlevel10k theme";
     };
     
+    enableKubectx = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable kubectl context display in prompt and install kubectl/kubectx";
+    };
+    
     ohMyZshPlugins = mkOption {
       type = types.listOf types.str;
       default = [ "git" "sudo" "docker" "history" "colorize" "direnv" ];
@@ -50,6 +56,12 @@ with lib;
   };
 
   config = mkIf config.myHomeModules.zsh.enable {
+    # Install kubectl and kubectx if enabled
+    home.packages = with pkgs; mkIf config.myHomeModules.zsh.enableKubectx [
+      kubectl
+      kubectx
+    ];
+    
     programs.zsh = {
       enable = true;
       autosuggestion.enable = config.myHomeModules.zsh.enableAutosuggestions;
@@ -58,7 +70,8 @@ with lib;
       
       oh-my-zsh = mkIf config.myHomeModules.zsh.enableOhMyZsh {
         enable = true;
-        plugins = config.myHomeModules.zsh.ohMyZshPlugins;
+        plugins = config.myHomeModules.zsh.ohMyZshPlugins 
+          ++ (optional config.myHomeModules.zsh.enableKubectx "kubectl");
       };
       
       plugins = with pkgs; mkIf config.myHomeModules.zsh.enablePowerlevel10k [

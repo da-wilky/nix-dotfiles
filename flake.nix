@@ -36,9 +36,7 @@
     };
 
     # Raspberry Pi 5
-    nixos-raspberrypi = {
-      url = "github:nvmd/nixos-raspberrypi/main";
-    };
+    nixos-raspberrypi = { url = "github:nvmd/nixos-raspberrypi/main"; };
 
     # MicroVM support
     microvm = {
@@ -56,7 +54,8 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, vscode-server, agenix, sops-nix
-    , nixos-hardware, home-manager, nixos-raspberrypi, db_backup_scripts, microvm, ... }@inputs:
+    , nixos-hardware, home-manager, nixos-raspberrypi, db_backup_scripts
+    , microvm, ... }@inputs:
     let
       system = "x86_64-linux";
       pi_system = "aarch64-linux";
@@ -71,7 +70,7 @@
       #];
     in {
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
-	inherit system;
+        inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/homeserver/configuration.nix
@@ -95,28 +94,31 @@
               enableNCTestInterface = true;
             };
 
-            myUsers.samuel.homeModules.ssh.extraMatchBlocks = {
-              "gitlab.rn.inf.tu-dresden.de" = {
-                hostname = "gitlab.rn.inf.tu-dresden.de";
-                user = "git";
-                port = 22;
-                identityFile = "~/.ssh/tu";
+            myUsers.samuel.homeModules = {
+              zsh.enableKubectx = true;
+              ssh.extraMatchBlocks = {
+                "gitlab.rn.inf.tu-dresden.de" = {
+                  hostname = "gitlab.rn.inf.tu-dresden.de";
+                  user = "git";
+                  port = 22;
+                  identityFile = "~/.ssh/tu";
+                };
               };
             };
-            
+
             # Incus container and VM management
             # myModules.incus = {
             #   enable = true;
             #   ui.enable = false;
             #   users = [ "samuel" ];
-              
+
             #   preseed = {
             #     storagePool = "default";
             #     storageDriver = "dir";
             #     networkBridge = "incusbr0";
             #     networkAddress = "10.18.10.1/24";
             #   };
-              
+
             #   instances = {
             #     ubuntu-1 = {
             #       name = "ubuntu-1";
@@ -138,7 +140,7 @@
         ];
       };
       nixosConfigurations.blu = nixpkgs.lib.nixosSystem {
-	inherit system;
+        inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/blu/configuration.nix
@@ -152,7 +154,7 @@
             myModules.netbird.enable = true;
             myModules.nixld.enable = true;
 
-	    myModules.openssh.openFirewall = false;
+            myModules.openssh.openFirewall = false;
           }
 
           # External modules
@@ -161,7 +163,7 @@
         ];
       };
       nixosConfigurations.lunar = nixpkgs.lib.nixosSystem {
-	inherit system;
+        inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/lunar/configuration.nix
@@ -172,9 +174,9 @@
           # System-specific configuration
           {
             myModules.docker.enable = true;
-	    myModules.netbird.enable = true;
+            myModules.netbird.enable = true;
 
-	    myModules.openssh.openFirewall = false;
+            myModules.openssh.openFirewall = false;
           }
 
           # External modules
@@ -183,7 +185,7 @@
         ];
       };
       nixosConfigurations.pangolier = nixpkgs.lib.nixosSystem {
-	inherit system;
+        inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/pangolier/configuration.nix
@@ -194,11 +196,11 @@
           # System-specific configuration
           {
             myModules.docker.enable = true;
-	    #myModules.podman.enable = true;
-	    #myModules.podman.dockerSocket.enable = true;
-	    myModules.netbird.enable = true;
+            #myModules.podman.enable = true;
+            #myModules.podman.dockerSocket.enable = true;
+            myModules.netbird.enable = true;
 
-	    myModules.openssh.openFirewall = false;
+            myModules.openssh.openFirewall = false;
           }
 
           # External modules
@@ -207,7 +209,7 @@
         ];
       };
       nixosConfigurations.pibackups = nixpkgs.lib.nixosSystem {
-	system = pi_system;
+        system = pi_system;
         specialArgs = { inherit inputs; };
         modules = [
           ./system/pibackups/configuration.nix
@@ -230,7 +232,7 @@
         ];
       };
       nixosConfigurations.pi5dd = nixos-raspberrypi.lib.nixosSystem {
-	system = pi_system;
+        system = pi_system;
         specialArgs = {
           inherit inputs;
           nixos-raspberrypi = inputs.nixos-raspberrypi;
@@ -240,15 +242,15 @@
           ({ ... }: {
             imports = with nixos-raspberrypi.nixosModules;
               [ raspberry-pi-5.base ];
-	    boot.loader.raspberryPi.bootloader = "kernel";
+            boot.loader.raspberryPi.bootloader = "kernel";
           })
-	  #{
-	  #  boot.loader.raspberryPi = {
-	  #    enable = true;
-	  #    bootPath = "/boot";
-	  #    bootloader = "kernel";
-	  #  };
-	  #}
+          #{
+          #  boot.loader.raspberryPi = {
+          #    enable = true;
+          #    bootPath = "/boot";
+          #    bootloader = "kernel";
+          #  };
+          #}
 
           ./system/pi5dd/configuration.nix
 

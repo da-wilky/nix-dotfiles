@@ -65,6 +65,12 @@ in {
           default = true;
           description = "Enable ZSH home-manager module";
         };
+
+        enableKubectx = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable kubectl context display in prompt and install kubectl/kubectx";
+        };
       };
 
       neovim = {
