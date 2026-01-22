@@ -89,7 +89,7 @@ with lib;
    
       extraConfig = ''
         colorscheme ${config.myHomeModules.neovim.colorscheme}
-        set number shiftwidth=${toString config.myHomeModules.neovim.tabWidth}
+        set number relativenumber shiftwidth=${toString config.myHomeModules.neovim.tabWidth}
         highlight Normal guibg=none
         highlight NonText guibg=none
         highlight Normal ctermbg=none
