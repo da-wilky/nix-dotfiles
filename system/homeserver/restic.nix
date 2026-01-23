@@ -10,7 +10,8 @@
       backupPingName = "homeserver";
       paths = [ "/home/samuel" "/data" ];
       backupSopsFile = ../../secrets/system/homeserver.yml;
-
+      enablePings = false;
+      
       # Optional: Add database backup commands
       # extraPrepareCommands = ''
       #   $POSTGRES /home/samuel/immich database "" "" "" DB_DATABASE_NAME DB_USERNAME &
