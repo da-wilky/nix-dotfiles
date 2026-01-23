@@ -49,6 +49,7 @@ let
       - openssh-server
       - iptables
       - curl
+      - open-iscsi
     
     users:
       - name: samuel
@@ -69,7 +70,7 @@ let
       lxc.apparmor.profile = unconfined
       lxc.cap.drop =
     '';
-    "linux.kernel_modules" = "ip_tables,nf_conntrack,br_netfilter,overlay";
+    "linux.kernel_modules" = "ip_tables,nf_conntrack,br_netfilter,overlay,iscsi_tcp";
   };
 in {
   # MicroVM configuration for running Incus with privileged containers
@@ -134,7 +135,7 @@ in {
       boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
       
       # Kernel Modules
-      boot.kernelModules = [ "br_netfilter" "overlay" "ip_tables" "iptable_nat" "iptable_filter" ];
+      boot.kernelModules = [ "br_netfilter" "overlay" "ip_tables" "iptable_nat" "iptable_filter" "iscsi_tcp" "iscsi_target_mod" ];
   
       # Enable Incus with the existing module
       myModules.incus = {
@@ -191,6 +192,22 @@ in {
             image = containerDefaults.image;
             autostart = true;
             ipAddress = "${containerNetwork.subnet}.103";
+            config = {
+              "cloud-init.user-data" = cloudInit;
+              "security.privileged" = "true";
+              "security.nesting" = "true";
+            } // k3sContainerConfig;
+          };
+
+          rust-fs = {
+            name = "rust-fs";
+            type = "container";
+            memory = containerDefaults.memory;
+            cpus = containerDefaults.cpus;
+            diskSize = containerDefaults.diskSize;
+            image = containerDefaults.image;
+            autostart = true;
+            ipAddress = "${containerNetwork.subnet}.199";
             config = {
               "cloud-init.user-data" = cloudInit;
               "security.privileged" = "true";
