@@ -1,6 +1,10 @@
 snippet watchtower "Add Watchtower label to docker-compose service"
   com.centurylinklabs.watchtower.enable: ${1:true}
 
+snippet wud "Add wud labels to docker-compose service"
+  wud.watch: true
+  wud.watch.digest: false
+
 snippet traefik "Add traefik configuration to docker-compose service"
   traefik.enable: true
   traefik.http.routers.${1}.entrypoints: http
