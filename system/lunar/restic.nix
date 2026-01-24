@@ -14,6 +14,7 @@
         "/var/lib/docker/volumes/resource-planning_*"
         "/var/lib/docker/volumes/shlink_*"
         "/var/lib/docker/volumes/netbird_*"
+        "/var/lib/docker/volumes/rybbit_*"
       ];
       backupSopsFile = ../../secrets/system/lunar.yml;
       
@@ -23,6 +24,7 @@
 	$POSTGRES $FOLDER/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
         $POSTGRES $FOLDER/shlink db DB_NAME DB_USER &
         $POSTGRES $FOLDER/keycloak &
+	$POSTGRES $FOLDER/rybbit postgres &
         wait
       '';
     };
