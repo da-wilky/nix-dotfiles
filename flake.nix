@@ -175,6 +175,10 @@
           {
             myModules.docker.enable = true;
             myModules.netbird.enable = true;
+	    myModules.netbird.clients."wt0" = {
+	      interface = "wt0";
+	      port = 51825;
+	    };
 
             myModules.openssh.openFirewall = false;
           }
