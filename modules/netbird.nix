@@ -17,7 +17,7 @@ with lib;
         options = {
           port = mkOption {
             type = types.port;
-            default = 51820;
+            default = 51825;
             description = "Port for this netbird client";
           };
           
@@ -64,7 +64,7 @@ with lib;
       });
       default = {
         "wt0" = {
-          port = 51820;
+          port = 51825;
           name = "netbird";
           interface = "wt0";
           hardened = false;
