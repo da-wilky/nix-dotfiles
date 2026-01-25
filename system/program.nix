@@ -18,6 +18,12 @@
     nixpkgs-fmt
     nixfmt-classic
 
+    # Network
+    mtr
+    tcpdump
+    net-tools
+    dnsutils
+
     # Development tools
   ];
 }
