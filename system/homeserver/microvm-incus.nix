@@ -76,7 +76,7 @@ in {
   # MicroVM configuration for running Incus with privileged containers
   microvm.vms.${vmName} = {
     # Autostart the VM on boot
-    autostart = true;
+    autostart = false;
 
     # MicroVM-specific configuration
     config = { config, lib, pkgs, ... }: {

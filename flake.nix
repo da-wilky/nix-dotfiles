@@ -105,33 +105,6 @@
                 };
               };
             };
-
-            # Incus container and VM management
-            # myModules.incus = {
-            #   enable = true;
-            #   ui.enable = false;
-            #   users = [ "samuel" ];
-
-            #   preseed = {
-            #     storagePool = "default";
-            #     storageDriver = "dir";
-            #     networkBridge = "incusbr0";
-            #     networkAddress = "10.18.10.1/24";
-            #   };
-
-            #   instances = {
-            #     ubuntu-1 = {
-            #       name = "ubuntu-1";
-            #       type = "container";
-            #       memory = "2GiB";
-            #       cpus = 2;
-            #       diskSize = "20GiB";
-            #       image = "images:ubuntu/24.04";
-            #       autostart = true;
-            #       ipAddress = "10.18.10.101";
-            #     };
-            #   };
-            # };
           }
 
           # External modules
