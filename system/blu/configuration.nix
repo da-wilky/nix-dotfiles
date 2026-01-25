@@ -30,8 +30,8 @@
   networking.networkmanager.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 3478 5349 ];
-  networking.firewall.allowedUDPPorts = [ 3478 5349 ];
+  #networking.firewall.allowedTCPPorts = [ 3478 5349 ];
+  #networking.firewall.allowedUDPPorts = [ 3478 5349 ];
   networking.firewall.interfaces."wt0" = {
     allowedTCPPorts = [ 3821 ];
   };
