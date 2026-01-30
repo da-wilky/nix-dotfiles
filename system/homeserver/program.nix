@@ -11,6 +11,9 @@
     helmfile
     k9s
 
+    # AI
+    claude-code
+
     # CLI programs
 
     # Languages
