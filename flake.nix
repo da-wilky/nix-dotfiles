@@ -74,7 +74,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./system/homeserver/configuration.nix
-          ./system/homeserver/microvm-incus.nix
+          #./system/homeserver/microvm-incus.nix
 
           # All core modules and users (loaded via default.nix, enable as needed)
           ./modules/default.nix
