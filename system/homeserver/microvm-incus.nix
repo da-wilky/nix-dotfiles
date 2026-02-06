@@ -153,7 +153,7 @@ in {
         instances = {
           ubuntu-1 = {
             name = "ubuntu-1";
-            type = "container";
+            type = "lxc";
             memory = containerDefaults.memory;
             cpus = containerDefaults.cpus;
             diskSize = containerDefaults.diskSize;
@@ -169,7 +169,7 @@ in {
 
           ubuntu-2 = {
             name = "ubuntu-2";
-            type = "container";
+            type = "lxc";
             memory = containerDefaults.memory;
             cpus = containerDefaults.cpus;
             diskSize = containerDefaults.diskSize;
@@ -185,7 +185,7 @@ in {
 
           ubuntu-3 = {
             name = "ubuntu-3";
-            type = "container";
+            type = "lxc";
             memory = containerDefaults.memory;
             cpus = containerDefaults.cpus;
             diskSize = containerDefaults.diskSize;

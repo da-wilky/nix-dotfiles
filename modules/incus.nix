@@ -14,10 +14,10 @@ let
       };
 
       type = mkOption {
-        type = types.enum [ "vm" "container" ];
-        default = "container";
+        type = types.enum [ "vm" "lxc" ];
+        default = "lxc";
         description =
-          "Type of instance: 'vm' for virtual machine or 'container' for LXC container";
+          "Type of instance: 'vm' for virtual machine or 'lxc' for LXC container";
       };
 
       memory = mkOption {
@@ -421,8 +421,8 @@ in {
               }
               ${incusCmd} config set ${instanceConfig.name} limits.memory ${instanceConfig.memory}
               
-              # Override root disk size
-              ${incusCmd} config device override ${instanceConfig.name} root size=${instanceConfig.diskSize}
+              # Override root disk size and pool
+              ${incusCmd} config device override ${instanceConfig.name} root size=${instanceConfig.diskSize} pool=${instanceConfig.diskPool}
               
               # Apply multi-line config options (like cloud-init user-data)
               ${
