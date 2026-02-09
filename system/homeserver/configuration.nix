@@ -2,27 +2,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 let
 in {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./program.nix
-      ./restic.nix
-      ../configuration.nix
-      ../program.nix
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./program.nix
+    ./restic.nix
+    ../configuration.nix
+    ../program.nix
   ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
-  fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/01d7af1a-c6dc-451c-a7b3-36797c2ffe15";
-      fsType = "ext4";
-    };
+
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/01d7af1a-c6dc-451c-a7b3-36797c2ffe15";
+    fsType = "ext4";
+  };
 
   programs.zsh.shellAliases = {
     nixupdate = "sudo nixos-rebuild switch --flake ~/dotfiles/#homeserver";
@@ -33,10 +32,10 @@ in {
   networking = {
     hostName = "homeserver"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    
+
     # Enable networking
     networkmanager.enable = true;
-    
+
     # Open ports in the firewall.
     firewall.allowedTCPPorts = [ 22 3000 ];
     # firewall.allowedUDPPorts = [ ... ];
@@ -50,6 +49,39 @@ in {
     # proxy.default = "http://user:password@proxy:port/";
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
+
+  #
+  #   Sops
+  #
+  sops = let sopsFile = ../../secrets/system/homeserver.yml;
+  in {
+    secrets = {
+      pgadmin-password = {
+        inherit sopsFile;
+        mode = "0600";
+      };
+    };
+  };
+
+  #   ---------
+
+  #
+  #   Services
+  #
+  services.postgresql = {
+    enable = false;
+    package = pkgs.postgresql_18;
+  };
+
+  services.pgadmin = {
+    enable = true;
+    port = 5050;
+    openFirewall = true;
+    initialEmail = "me@swilk.eu";
+    initialPasswordFile = config.sops.secrets.pgadmin-password.path;
+  };
+
+  #   --------
 
   security.sudo.wheelNeedsPassword = false;
 
