@@ -10,21 +10,25 @@
       backupPingName = "lunar";
       paths = [
         "/home/samuel"
-        "/var/lib/docker/volumes/wazuh_*"
-        "/var/lib/docker/volumes/resource-planning_*"
-        "/var/lib/docker/volumes/shlink_*"
+        "/var/lib/docker/volumes/gotify_*"
         "/var/lib/docker/volumes/netbird_*"
+        "/var/lib/docker/volumes/nextcloud_*"
+        "/var/lib/docker/volumes/resource-planning_*"
         "/var/lib/docker/volumes/rybbit_*"
+        "/var/lib/docker/volumes/shlink_*"
+        "/var/lib/docker/volumes/wazuh_*"
       ];
       backupSopsFile = ../../secrets/system/lunar.yml;
       
       extraPrepareCommands = ''
 	FOLDER="/home/samuel/apps"
 	
-	$POSTGRES $FOLDER/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
-        $POSTGRES $FOLDER/shlink db DB_NAME DB_USER &
+	$POSTGRES $FOLDER/gotify & 
         $POSTGRES $FOLDER/keycloak &
+	$POSTGRES $FOLDER/nextcloud db PG_DB PG_USER &
+	$POSTGRES $FOLDER/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
 	$POSTGRES $FOLDER/rybbit postgres &
+        $POSTGRES $FOLDER/shlink db DB_NAME DB_USER &
         wait
       '';
     };
