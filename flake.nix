@@ -220,7 +220,7 @@
           ({ ... }: {
             imports = with nixos-raspberrypi.nixosModules;
               [ raspberry-pi-5.base ];
-            boot.loader.raspberryPi.bootloader = "kernel";
+            boot.loader.raspberry-pi.bootloader = "kernel";
           })
           #{
           #  boot.loader.raspberryPi = {
