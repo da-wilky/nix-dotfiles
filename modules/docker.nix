@@ -35,6 +35,12 @@ with lib;
       default = true;
       description = "Trust docker network interfaces in firewall (br-+, veth+, docker0, docker_gwbridge)";
     };
+
+    extraPackages = mkOption {
+      type = types.listOf types.package;
+      default = [];
+      description = "Extra packages to install for docker";
+    };
   };
 
   config = mkIf config.myModules.docker.enable {
@@ -42,6 +48,7 @@ with lib;
       enable = true;
       liveRestore = config.myModules.docker.liveRestore;
       enableOnBoot = config.myModules.docker.enableOnBoot;
+      extraPackages = config.myModules.docker.extraPackages;
       daemon.settings = mkIf config.myModules.docker.ipv6 {
         ipv6 = true;
         fixed-cidr-v6 = config.myModules.docker.fixedCidrV6;
