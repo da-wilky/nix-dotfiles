@@ -172,14 +172,15 @@
           ./modules/default.nix
 
           # System-specific configuration
-          {
+          ({ pkgs, ... }: {
             myModules.docker.enable = true;
+            myModules.docker.extraPackages = [ pkgs.docker-buildx ];
             #myModules.podman.enable = true;
             #myModules.podman.dockerSocket.enable = true;
             myModules.netbird.enable = true;
 
             myModules.openssh.openFirewall = false;
-          }
+          })
 
           # External modules
           sops-nix.nixosModules.sops
