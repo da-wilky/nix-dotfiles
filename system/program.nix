@@ -11,6 +11,7 @@
     htop
     btop
     openssl
+    jq
 
     # Languages
 
