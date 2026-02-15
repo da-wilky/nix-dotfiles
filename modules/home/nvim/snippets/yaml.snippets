@@ -14,3 +14,9 @@ snippet traefik "Add traefik configuration to docker-compose service"
   traefik.http.routers.${1}-secure.rule: Host(\`${2}\`)
   traefik.http.routers.${1}-secure.service: ${1}
   traefik.http.services.${1}.loadbalancer.server.port: ${4:80}
+snippet logging "Add default logging to docker-compose service"
+  logging:
+    driver: 'json-file'
+    options:
+      max-file: ${1:'3'}
+      max-size: ${2:'10M'}
