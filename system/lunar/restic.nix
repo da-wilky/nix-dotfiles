@@ -17,6 +17,8 @@
         "/var/lib/docker/volumes/rybbit_*"
         "/var/lib/docker/volumes/shlink_*"
         "/var/lib/docker/volumes/wazuh_*"
+	"/root/mailcow"
+	"/var/lib/docker/volumes/mailcow*"
       ];
       backupSopsFile = ../../secrets/system/lunar.yml;
       
@@ -25,6 +27,7 @@
 	
 	$POSTGRES $FOLDER/gotify & 
         $POSTGRES $FOLDER/keycloak &
+	$MARIADB /root/mailcow mysql-mailcow DBNAME DBUSER DBPASS &
 	$POSTGRES $FOLDER/nextcloud db PG_DB PG_USER &
 	$POSTGRES $FOLDER/resource-planning db DJANGO_DB_NAME DJANGO_DB_USER &
 	$POSTGRES $FOLDER/rybbit postgres &
