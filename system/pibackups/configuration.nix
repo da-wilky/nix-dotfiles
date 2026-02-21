@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       ./program.nix
       ./restic.nix
+      ./samba.nix
       ../configuration.nix
       ../program.nix
     ];
@@ -56,38 +57,6 @@
     # firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
     # firewall.enable = false;
-  };
-
-  # Samba (drive shares)
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      global = {
-	security = "user";
-	"invalid users" = [
-	  "root"
-	];
-
-	"hosts allow" = "192.168.0.0/16 100.85.0.0/16 127.0.0.1 localhost";
-	"hosts deny" = "0.0.0.0/0";
-	"guest ok" = "no";
-      };
-
-      NetworkShared = {
-	"path" = "/data/backups/NetworkShared";
-	"browsable" = "yes";
-	"read only" = "no";
-	"create mask" = "0644";
-	"directory mask" = "0755";
-      };
-    };
-  };
-
-  # So Windows machines can detect it
-  services.samba-wsdd = {
-    enable = true;
-    openFirewall = true;
   };
 
   # Enable the X11 windowing system.
