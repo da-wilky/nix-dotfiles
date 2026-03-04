@@ -109,6 +109,7 @@ with lib;
 	    c = "commit";
 	    co = "checkout";
 	    st = "status";
+	    tree = "log --graph --oneline --decorate --all";
 	    undo = "reset --soft HEAD^";
 	    wt = "worktree";
 	    wta = "worktree add";
