@@ -15,6 +15,7 @@
     claude-code
 
     # CLI programs
+    gh
 
     # Languages
 
