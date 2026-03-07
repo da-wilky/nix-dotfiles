@@ -23,6 +23,7 @@
   myHomeModules.zsh = {
     enable = userConfig.zsh.enable or true;
     enableKubectx = userConfig.zsh.enableKubectx or false;
+    extraInit = userConfig.zsh.extraInit or "";
   };
   myHomeModules.neovim.enable = userConfig.neovim.enable or true;
   myHomeModules.ssh = {

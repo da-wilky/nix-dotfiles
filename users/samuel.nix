@@ -71,6 +71,12 @@ in {
           default = false;
           description = "Enable kubectl context display in prompt and install kubectl/kubectx";
         };
+
+        extraInit = mkOption {
+          type = types.lines;
+          default = "";
+          description = "Additional shell initialization code";
+        };
       };
 
       neovim = {

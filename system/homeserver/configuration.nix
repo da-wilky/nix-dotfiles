@@ -10,6 +10,7 @@ in {
     ./hardware-configuration.nix
     ./program.nix
     ./restic.nix
+    ./infisical.nix
     ../configuration.nix
     ../program.nix
   ];

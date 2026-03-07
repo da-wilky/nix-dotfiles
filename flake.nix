@@ -97,6 +97,14 @@
 
             myUsers.samuel.homeModules = {
               zsh.enableKubectx = true;
+              zsh.extraInit = ''
+                if [[ -f /run/infisical-agent/infisical-token ]]; then
+                  export INFISICAL_TOKEN=$(cat /run/infisical-agent/infisical-token)
+                fi
+                if [[ -f /run/secrets/infisical-url ]]; then
+                  export INFISICAL_API_URL=$(cat /run/secrets/infisical-url)
+                fi
+              '';
               ssh.extraMatchBlocks = {
                 "gitlab.rn.inf.tu-dresden.de" = {
                   hostname = "gitlab.rn.inf.tu-dresden.de";

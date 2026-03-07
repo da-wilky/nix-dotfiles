@@ -16,6 +16,7 @@
 
     # CLI programs
     gh
+    infisical
 
     # Languages
 
