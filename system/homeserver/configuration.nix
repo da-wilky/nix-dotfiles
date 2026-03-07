@@ -50,6 +50,13 @@ in {
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 
+  # ADB
+  programs.adb.enable = true;
+  users.users.samuel.extraGroups = [ "adbusers" ];
+
+  # For Github Copilot CLI to work
+  environment.localBinInPath = true;
+
   #
   #   Sops
   #
