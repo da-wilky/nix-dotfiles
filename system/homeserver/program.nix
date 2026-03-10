@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, nixpkgs-unstable, ...}:
 {
   environment.systemPackages = with pkgs; [
     openssl
@@ -12,7 +12,7 @@
     k9s
 
     # AI
-    claude-code
+    nixpkgs-unstable.claude-code
 
     # CLI programs
     gh

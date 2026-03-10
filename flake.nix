@@ -71,7 +71,13 @@
     in {
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          nixpkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
+          };
+        };
         modules = [
           ./system/homeserver/configuration.nix
           #./system/homeserver/microvm-incus.nix
