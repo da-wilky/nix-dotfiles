@@ -87,6 +87,20 @@ in {
         };
       };
 
+      gh = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable GitHub CLI home-manager module";
+        };
+
+        aliases = mkOption {
+          type = types.attrsOf types.str;
+          default = {};
+          description = "Additional gh aliases";
+        };
+      };
+
       ssh = {
         enable = mkOption {
           type = types.bool;

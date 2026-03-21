@@ -7,5 +7,6 @@
     ./zsh.nix
     ./neovim.nix
     ./ssh.nix
+    ./gh.nix
   ];
 }

@@ -111,6 +111,7 @@
                   export INFISICAL_API_URL=$(cat /run/secrets/infisical-url)
                 fi
               '';
+              gh.enable = true;
               ssh.extraMatchBlocks = {
                 "gitlab.rn.inf.tu-dresden.de" = {
                   hostname = "gitlab.rn.inf.tu-dresden.de";

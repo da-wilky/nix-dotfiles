@@ -15,7 +15,6 @@
     nixpkgs-unstable.claude-code
 
     # CLI programs
-    gh
     infisical
 
     # Languages

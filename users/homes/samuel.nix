@@ -26,6 +26,10 @@
     extraInit = userConfig.zsh.extraInit or "";
   };
   myHomeModules.neovim.enable = userConfig.neovim.enable or true;
+  myHomeModules.gh = {
+    enable = userConfig.gh.enable or false;
+    aliases = userConfig.gh.aliases or { };
+  };
   myHomeModules.ssh = {
     enable = userConfig.ssh.enable or false;
     activateGithub = userConfig.ssh.activateGithub or true;
