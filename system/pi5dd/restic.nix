@@ -14,6 +14,7 @@
         "/data/mails"
         "/data/others"
         "/var/lib/docker/volumes/immich_*"
+	"/var/lib/docker/volumes/infisical_*"
         "/var/lib/docker/volumes/kimai_*"
         "/var/lib/docker/volumes/opnform_*"
         "/var/lib/docker/volumes/solidtime_*"
@@ -24,6 +25,7 @@
       extraPrepareCommands = ''
 	FOLDER="/home/samuel/apps"
 	$POSTGRES $FOLDER/immich database DB_DATABASE_NAME DB_USERNAME &
+        $POSTGRES $FOLDER/infisical &
         $POSTGRES $FOLDER/vaultwarden &
         $POSTGRES $FOLDER/TimeTracker &
         # $POSTGRES $FOLDER/other/mail-archiver postgres "" "" /data/mails/mail-archiver/db_backup &
